@@ -1,4 +1,5 @@
-# Resumen Ejecutivo: Sistema de Información para TITAN - ES SEGURIDAD EN ALTURAS S.A.S.
+# Resumen Ejecutivo: Proyecto TITAN 
+
 ## 1. Introducción
 
 El presente proyecto documenta el análisis, diseño y desarrollo de un sistema de información web para TITAN - ES SEGURIDAD EN ALTURAS S.A.S., una organización especializada en el entrenamiento y certificación de personal para trabajo seguro en alturas.
@@ -14,16 +15,18 @@ Se propone el desarrollo de una plataforma tecnológica integral que centralice 
 ## 4. Alcance y Funcionalidades Clave
 
 El sistema integra los siguientes módulos fundamentales:
-- Gestión Académica: Registro de empresas, aprendices, programación de cursos y asignación de instructores.
-- Evaluación y Certificación: Calificación en línea y generación automática de certificados con validación QR.
-- Módulo de Gestión Documental y Auditoría: Esta funcionalidad permite digitalizar, clasificar y almacenar el histórico de documentos requeridos (hojas de vida de instructores, mantenimientos de pistas, listas de asistencia, etc.), facilitando la disponibilidad inmediata de la información ante las auditorías anuales.
-- Reportes e Indicadores: Visualización del estado del negocio y alertas de vencimientos.
+- **Gestión Académica:** Registro de empresas, aprendices, programación de cursos y asignación de instructores.
+- **Evaluación y Certificación:** Calificación en línea y generación automática de certificados con validación QR.
+- **Módulo de Gestión Documental y Auditoría:** Esta funcionalidad permite digitalizar, clasificar y almacenar el histórico de documentos requeridos (hojas de vida de instructores, mantenimientos de pistas, listas de asistencia, etc.), facilitando la disponibilidad inmediata de la información ante las auditorías anuales.
+- **Reportes e Indicadores:** Visualización del estado del negocio y alertas de vencimientos.
 
 ## 5. Beneficios Esperados
-La implementación del software permitirá:
-- Reducir los tiempos administrativos en un 40%.
-- Eliminar errores humanos en la emisión de certificados.
-- Garantizar la trazabilidad y el cumplimiento normativo, transformando el proceso de auditoría anual en una tarea ágil y transparente, al tener toda la evidencia documental organizada y accesible en tiempo real.
 
+La implementación del software permitirá:
+- **Optimización Operativa:** Reducción del 40% en tiempos administrativos (inscripción y certificación).
+- **Integridad de la Información:** Eliminación de redundancia de datos y errores humanos.
+- **Seguridad y Cumplimiento:** Garantía de que cada certificado emitido cumple con la normativa vigente y es fácilmente verificable por los entes de control.
+- Garantizar la trazabilidad y el cumplimiento normativo, transformando el proceso de auditoría anual en una tarea ágil y transparente, al tener toda la evidencia documental organizada y accesible en tiempo real.
+  
 ## 6. Conclusión
 Este proyecto tecnológico moderniza a TITAN, asegurando no solo la eficiencia en su servicio de capacitación, sino también la solidez y transparencia administrativa necesaria para mantener sus acreditaciones de calidad año tras año.
