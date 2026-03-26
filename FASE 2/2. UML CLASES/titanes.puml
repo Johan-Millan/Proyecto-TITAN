@@ -1,0 +1,122 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' --- MÓDULO DE ACCESO (LOS QUE HACEN LOGIN) ---
+abstract class Usuario {
+  # idUsuario: int
+  # nombreUsuario: String
+  # correo: String
+  # passwordHash: String
+  # estadoActivo: boolean
+  + login(correo: String, pass: String): boolean
+  + restablecerPassword(): void
+}
+
+class Administrador {
+  + programarCurso(c: Curso): ProgramacionCurso
+  + generarFactura(e: Empresa): Factura
+}
+
+class Instructor {
+  + registrarAsistencia(i: Inscripcion): void
+  + evaluarTrabajador(): void
+  + inspeccionarEquipo(eq: Equipo): Inspeccion
+}
+
+' --- MÓDULO OPERATIVO (LOS QUE SE CAPACITAN) ---
+class Trabajador {
+  - idTrabajador: int
+  - numeroIdentificacion: long
+  - nombreCompleto: String
+  - telefono: long
+  - correo: String
+  + consultarEstadoSalud(): boolean
+  + descargarCertificado(): File
+}
+
+class Empresa {
+  - idEmpresa: int
+  - nit: String
+  - nombre: String
+  - correo: String
+  + matricularTrabajadores(): void
+  + pagarFactura(): void
+}
+
+' --- MÓDULO ACADÉMICO ---
+class Curso {
+  - idCurso: int
+  - nombreCurso: String
+  - intensidadHoraria: int
+}
+
+class ProgramacionCurso {
+  - idProgramacion: int
+  - fecha: Date
+  - hora: Time
+  - cupos: int
+  + verificarCupoDisponible(): boolean
+}
+
+class Inscripcion {
+  - idInscripcion: int
+  - estado: String
+  - asistio: boolean
+  + registrarAsistencia(estado: boolean): void
+}
+
+class Certificado {
+  - idCertificado: int
+  - codigo: String
+  - fechaEmision: Date
+  - fechaVencimiento: Date
+  + generarPDF(): File
+  + validarVigencia(): boolean
+}
+
+' --- MÓDULO AUDITORÍA Y SEGURIDAD ---
+class Documento {
+  - idDocumento: int
+  - nombre: String
+  - rutaArchivo: String
+  + subirArchivo(archivo: File): boolean
+  + descargar(): File
+}
+
+class Equipo {
+  - idEquipo: int
+  - nombre: String
+  - descripcion: String
+}
+
+class CertificadoEquipo {
+  - idCertificadoEquipo: int
+  - fechaVencimiento: Date
+  - estado: String
+  + alertarVencimiento(): void
+}
+
+' --- RELACIONES ---
+
+' Herencia
+Usuario <|-- Administrador
+Usuario <|-- Instructor
+
+' Agregación
+Empresa o-- Trabajador : "emplea >"
+ProgramacionCurso o-- Curso : "pertenece a >"
+Equipo *-- CertificadoEquipo : "tiene >"
+
+' Asociaciones de Usuario
+Instructor "1" -- "*" ProgramacionCurso : "dicta >"
+Usuario "1" -- "*" Documento : "posee (Hoja vida) >"
+
+' Asociaciones de Trabajador (El núcleo operativo)
+Trabajador "1" -- "*" Certificado : "obtiene >"
+Trabajador "1" -- "*" Documento : "posee (Cédula/Salud) >"
+
+' Clase Asociativa (Inscripcion) entre Trabajador y ProgramacionCurso
+Trabajador "1" -- "*" Inscripcion : "se inscribe >"
+ProgramacionCurso "1" -- "*" Inscripcion : "tiene >"
+
+@enduml
