@@ -14,7 +14,7 @@
 
 ## PREGUNTA PROBLEMA
 
-¿De qué manera el diseño e implementación de un sistema de información integral puede mejorar la gestión de datos, optimizar los procesos administrativos y operativos, y fortalecer la toma de decisiones en la empresa TITAN-ES SEGURIDAD EN ALTURAS, contribuyendo a una mayor eficiencia y seguridad en sus operaciones?
+¿Cuánto tiempo y capital está sacrificando TITAN-ES SEGURIDAD EN ALTURAS debido a la gestión manual de su información, y de qué manera la implementación de un sistema centralizado de pólizas, capacitaciones y siniestros podría detener esta pérdida para potenciar la rentabilidad y la seguridad operativa?
 
 ---
 
