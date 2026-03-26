@@ -1,4 +1,4 @@
-# Resumen Ejecutivo: Proyecto TITAN 
+# Proyecto TITAN 
 
 ## 1. Introducción
 
