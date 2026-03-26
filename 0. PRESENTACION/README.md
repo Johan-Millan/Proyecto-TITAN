@@ -21,7 +21,7 @@
 ## OBJETIVOS
 ### OBJETIVO GENERAL
 
-Diseñar y desarrollar un sistema de información integral para TITAN-ES SEGURIDAD EN ALTURAS que permita centralizar y gestionar de manera segura los datos de clientes, pólizas, capacitación y siniestros, logrando una reducción del 30% en los tiempos de registro y consulta de información al cabo de 9 meses del proyecto.
+Diseñar y desarrollar un sistema de información integral para TITAN-ES SEGURIDAD EN ALTURAS que permita centralizar y gestionar de manera segura los datos de clientes, pólizas, capacitación y siniestros, logrando una reducción del 85% en los tiempos de registro y consulta de información al cabo de 9 meses del proyecto.
 
 ### OBJETIVOS ESPECIFICOS
 
