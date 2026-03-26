@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+skinparam node {
+    BackgroundColor White
+    BorderColor Black
+}
+
+node "Dispositivo Cliente\n(PC, Tablet, Smartphone)" as Client {
+    node "Navegador Web" as Browser {
+        artifact "Frontend APP\n(HTML, CSS, JavaScript)" as UI
+    }
+}
+
+node "Servidor de Aplicaciones\n(Cloud VPS / Hosting)" as AppServer {
+    node "Contenedor Web\n(Apache Tomcat Embebido)" as Tomcat {
+        artifact "Backend API REST\n(Spring Boot - .jar)" as SpringApp {
+            component "Controladores REST" as Controllers
+            component "Lógica de Negocio (Services)" as Services
+            component "Acceso a Datos (JPA/Hibernate)" as DAO
+            
+            Controllers --> Services
+            Services --> DAO
+        }
+    }
+}
+
+node "Servidor de Base de Datos\n(Cloud DB)" as DBServer {
+    database "MySQL Server" as MySQL {
+        artifact "Base de Datos\nTITAN (23 Tablas)" as DB
+    }
+}
+
+' Relaciones de red y comunicación
+UI == Controllers : "Peticiones HTTP/JSON\n<<API REST>>"
+DAO == DB : "Conexión JDBC / TCP/IP\n(Puerto 3306)"
+
+@enduml
