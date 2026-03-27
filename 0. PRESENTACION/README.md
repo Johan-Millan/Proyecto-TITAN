@@ -4,7 +4,8 @@
 ## INTEGRANTES
 | Nombre | Apellidos | Foto |
 |--------|-----------|------| 
-| Johan Daniel | Millan Rodriguez |<img width="120" height="150" alt="image" src="assets/Johan Millan.png" />|
+| Johan Daniel | Millan Rodriguez |<img width="120" height="150" alt="image" src="<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/4ea2e300-c83f-485f-9e74-4fd96f9b6491" />
+" />|
 | Paula Nicole | Gomez Lopez |<img width="120" height="150" alt="image" src="assets/Paula Gomez.png" />|
 | Enrique | Vasilescu Silva |<img width="105" height="160" alt="image" src="assets/Enrique Vasilescu.png" />|
 | Karem Juliet | Barandica Arias |<img width="105" height="130" alt="image" src="assets/Karem Barandica.png" />|
