@@ -9,7 +9,7 @@ abstract class Usuario {
   # passwordHash: String
   # estadoActivo: boolean
   + login(correo: String, pass: String): boolean
-  + restablecerPassword(): void
+  + restablecerPassword(): boolean
 }
 
 class Administrador {
@@ -18,8 +18,8 @@ class Administrador {
 }
 
 class Instructor {
-  + registrarAsistencia(i: Inscripcion): void
-  + evaluarTrabajador(): void
+  + registrarAsistencia(i: Inscripcion): boolean
+  + evaluarTrabajador(): Evaluacion
   + inspeccionarEquipo(eq: Equipo): Inspeccion
 }
 
@@ -39,8 +39,8 @@ class Empresa {
   - nit: String
   - nombre: String
   - correo: String
-  + matricularTrabajadores(): void
-  + pagarFactura(): void
+  + matricularTrabajadores(): boolean
+  + pagarFactura(): Pago
 }
 
 ' --- MÓDULO ACADÉMICO ---
@@ -62,7 +62,7 @@ class Inscripcion {
   - idInscripcion: int
   - estado: String
   - asistio: boolean
-  + registrarAsistencia(estado: boolean): void
+  + registrarAsistencia(estado: boolean): boolean
 }
 
 class Certificado {
@@ -93,7 +93,7 @@ class CertificadoEquipo {
   - idCertificadoEquipo: int
   - fechaVencimiento: Date
   - estado: String
-  + alertarVencimiento(): void
+  + alertarVencimiento(): Alerta
 }
 
 ' --- RELACIONES ---
