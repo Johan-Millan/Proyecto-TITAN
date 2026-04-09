@@ -4,17 +4,16 @@ La arquitectura de software se define como la estructura organizativa fundamenta
 
 ## 2. Selección y Justificación del Patrón Arquitectónico
 
-Para el desarrollo del Sistema de Información de TITAN - ES SEGURIDAD EN ALTURAS S.A.S., se ha seleccionado una Arquitectura Cliente-Servidor distribuida, implementando el patrón MVC (Modelo-Vista-Controlador) en el backend mediante la construcción de una API RESTful.
+Para el desarrollo del Sistema de Información de TITAN - ES SEGURIDAD EN ALTURAS S.A.S., se ha seleccionado una Arquitectura Cliente-Servidor basada en servicios, implementando una API RESTful y una organización en capas (Controller, Service, Repository), alineada con principios de Clean Architecture.
 
 **Justificación técnica de la selección:**
-Descarte de Microservicios (Prevención de Overengineering): Dado que el sistema posee un modelo de datos altamente relacional (23 tablas fuertemente acopladas con llaves foráneas para garantizar auditorías y trazabilidad) y un tráfico de usuarios moderado/predecible, una arquitectura de microservicios aportaría una complejidad innecesaria en infraestructura y transaccionalidad.
-Separación de Responsabilidades (Cliente-Servidor): Al separar el Frontend (interfaz de usuario) del Backend (lógica de negocio), el sistema se vuelve altamente escalable. Esto permitirá en el futuro desarrollar, por ejemplo, una aplicación móvil exclusiva para que los instructores suban notas en la pista de entrenamiento, consumiendo la misma API sin necesidad de reescribir código.
 
-Patrón MVC adaptado a API REST:
-
-- **Modelo:** Representado por las entidades de la base de datos (Java/JPA).
-- **Controlador:** Los REST Controllers de Spring Boot que gestionan las peticiones HTTP (GET, POST, PUT, DELETE).
-- **Vista:** Delegada completamente al Frontend (HTML, CSS y JavaScript), que consume los datos en formato JSON enviados por el servidor.
+- **Prevención de sobreingeniería:**
+Dado que el sistema presenta un modelo de datos altamente relacional y un volumen de usuarios moderado, se descarta el uso de microservicios. Una arquitectura monolítica modular permite mantener la simplicidad, garantizar la integridad transaccional y reducir la complejidad operativa.
+- **Separación de responsabilidades:**
+La división entre frontend y backend permite escalar cada componente de forma independiente, facilitando la integración futura de aplicaciones móviles o nuevos clientes sin modificar la lógica de negocio.
+- **Escalabilidad y mantenibilidad:**
+El uso de una arquitectura por capas desacopla la lógica del sistema, facilitando pruebas, mantenimiento y evolución del software.
 
 ## 3. Definición del Stack Tecnológico
 
@@ -23,7 +22,7 @@ De acuerdo con las necesidades del proyecto y las competencias del equipo de des
 **Backend (Lógica de Negocio y API):**
 
 - **Lenguaje:** Java.
-- **Framework Principal:** Spring Boot. Es ideal para aplicaciones empresariales, ya que incluye un servidor web embebido (Apache Tomcat) y facilita la configuración de seguridad y servicios REST.
+- **Framework Principal:** Spring Boot y Spring WebFlux.
 
 **Módulos de Spring:**
   
@@ -33,8 +32,8 @@ De acuerdo con las necesidades del proyecto y las competencias del equipo de des
 
 **Frontend (Interfaz de Usuario):**
 
-- **Lenguajes:** JavaScript (ES6+), HTML5 y CSS3.
-- **Librerías/Herramientas:** Consumo de la API mediante Fetch API (o Axios). Se puede integrar Bootstrap o Tailwind CSS para un diseño responsivo y profesional que funcione bien en computadoras y tablets (indispensable para el trabajo en pista de los instructores).
+- **Lenguajes:** Typescript, React
+- **Librerías/Herramientas:** Consumo de la API mediante Axios, Tailwind CSS para un diseño responsivo y profesional que funcione bien en computadoras y tablets (indispensable para el trabajo en pista de los instructores).
 
 **Base de Datos (Persistencia):**
 
