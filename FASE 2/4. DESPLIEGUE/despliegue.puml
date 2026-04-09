@@ -1,56 +1,61 @@
 @startuml
-title Diagrama de Despliegue - Proyecto TITAN
+title Diagrama de Despliegue:  Proyecto TITAN
 
 skinparam componentStyle uml2
 skinparam node {
     BackgroundColor White
-    BorderColor Black
+    BorderColor #263238
 }
 
-' Definición de los nodos de hardware y software
-
-node "Dispositivo Cliente (PC/Smartphone)" <<device>> as Client {
-    node "Navegador Web" <<execution environment>> {
-        artifact "Frontend (REACT/Tailwind CSS/TypeScript)" as UI
+' --- LADO DEL CLIENTE ---
+node "Dispositivo del Usuario" <<Device>> as Client {
+    node "Web Browser" <<Execution Environment>> {
+        artifact "Frontend App (React/TypeScript/Tailwind CSS)" as Frontend
+        note right: Consume la API mediante JSON
     }
 }
 
-node "Servidor de Aplicaciones" <<server>> as AppServer {
-    node "Entorno de Ejecución (Node.js/JVM/PHP)" <<execution environment>> as Runtime {
-        artifact "TITAN Backend API" as API
-        artifact "Módulo de Certificación (PDF/QR)" as CertModule
+' --- SERVIDOR WEB (Hosting del Frontend) ---
+node "Servidor de Contenido Estático" <<Server>> as WebServer {
+    artifact "Web Server (Nginx/Apache)" as StaticFiles
+}
+
+' --- SERVIDOR DE APLICACIONES (API RESTful) ---
+node "Servidor de Aplicaciones" <<Server>> as AppServer {
+    node "Runtime ( Java / SpringBoot)" <<Execution Environment>> as Runtime {
+        
+        package "TITAN API RESTful (Artifact)" {
+            component [**Controller Layer**] as Controller <<Component>>
+            component [**Service Layer**] as Service <<Component>>
+            component [**Repository Layer**] as Repository <<Component>>
+            
+            Controller -down-> Service : "Lógica de Negocio"
+            Service -down-> Repository : "Acceso a Datos"
+        }
     }
 }
 
-node "Servidor de Base de Datos" <<server>> as DBServer {
-    node "SGBD (PostgreSQL/MySQL)" <<execution environment>> as DBMS {
-        database "DB_TITAN\n(Usuarios, Cursos, Notas)" as DB
+' --- SERVIDOR DE BASE DE DATOS ---
+node "Servidor de Base de Datos" <<Server>> as DBServer {
+    node "Motor de BD (PostgreSQL/MySQL)" <<Execution Environment>> as DBMS {
+        database "TITAN" as DB
     }
 }
 
-node "Servidor de Archivos / Cloud Storage" <<server>> as FileServer {
-    artifact "Repositorio de Certificados (PDF)" as PDFDocs
-}
+' --- RELACIONES ---
+Client -down-> WebServer : "1. Carga la App (HTTPS)"
+Client -down-> Controller : "2. Peticiones REST (JSON/HTTPS)"
+Repository -down-> DB : "3. Consultas SQL / NoSQL"
 
-cloud "Servicios Externos" {
-    node "Servidor SMTP" as EmailService
-}
-
-' Relaciones y protocolos
-Client -- AppServer : "HTTPS (REST API)"
-AppServer -- DBServer : "JDBC / Driver Nativo (Puerto 5432/3306)"
-AppServer -- FileServer : "File System / API S3"
-AppServer -- EmailService : "SMTP (Notificaciones)"
-
-note right of UI
-  Interfaz para Admin,
-  Instructores y Consulta
-  Pública de Certificados.
+' Notas adicionales
+note left of Controller
+  Puntos de entrada (Endpoints)
+  GET, POST, PUT, DELETE
 end note
 
-note bottom of CertModule
-  Genera el PDF con firma
-  y código QR de verificación.
+note left of Service
+  Validaciones de seguridad,
+  cálculos y reglas de negocio
 end note
 
 @enduml
