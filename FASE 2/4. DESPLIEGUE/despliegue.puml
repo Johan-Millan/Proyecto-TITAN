@@ -1,37 +1,56 @@
 @startuml
-left to right direction
+title Diagrama de Despliegue - Proyecto TITAN
+
+skinparam componentStyle uml2
 skinparam node {
     BackgroundColor White
     BorderColor Black
 }
 
-node "Dispositivo Cliente\n(PC, Tablet, Smartphone)" as Client {
-    node "Navegador Web" as Browser {
-        artifact "Frontend APP\n(HTML, CSS, JavaScript)" as UI
+' Definición de los nodos de hardware y software
+
+node "Dispositivo Cliente (PC/Smartphone)" <<device>> as Client {
+    node "Navegador Web" <<execution environment>> {
+        artifact "Frontend (REACT/Tailwind CSS/TypeScript)" as UI
     }
 }
 
-node "Servidor de Aplicaciones\n(Cloud VPS / Hosting)" as AppServer {
-    node "Contenedor Web\n(Apache Tomcat Embebido)" as Tomcat {
-        artifact "Backend API REST\n(Spring Boot - .jar)" as SpringApp {
-            component "Controladores REST" as Controllers
-            component "Lógica de Negocio (Services)" as Services
-            component "Acceso a Datos (JPA/Hibernate)" as DAO
-            
-            Controllers --> Services
-            Services --> DAO
-        }
+node "Servidor de Aplicaciones" <<server>> as AppServer {
+    node "Entorno de Ejecución (Node.js/JVM/PHP)" <<execution environment>> as Runtime {
+        artifact "TITAN Backend API" as API
+        artifact "Módulo de Certificación (PDF/QR)" as CertModule
     }
 }
 
-node "Servidor de Base de Datos\n(Cloud DB)" as DBServer {
-    database "MySQL Server" as MySQL {
-        artifact "Base de Datos\nTITAN (23 Tablas)" as DB
+node "Servidor de Base de Datos" <<server>> as DBServer {
+    node "SGBD (PostgreSQL/MySQL)" <<execution environment>> as DBMS {
+        database "DB_TITAN\n(Usuarios, Cursos, Notas)" as DB
     }
 }
 
-' Relaciones de red y comunicación
-UI == Controllers : "Peticiones HTTP/JSON\n<<API REST>>"
-DAO == DB : "Conexión JDBC / TCP/IP\n(Puerto 3306)"
+node "Servidor de Archivos / Cloud Storage" <<server>> as FileServer {
+    artifact "Repositorio de Certificados (PDF)" as PDFDocs
+}
+
+cloud "Servicios Externos" {
+    node "Servidor SMTP" as EmailService
+}
+
+' Relaciones y protocolos
+Client -- AppServer : "HTTPS (REST API)"
+AppServer -- DBServer : "JDBC / Driver Nativo (Puerto 5432/3306)"
+AppServer -- FileServer : "File System / API S3"
+AppServer -- EmailService : "SMTP (Notificaciones)"
+
+note right of UI
+  Interfaz para Admin,
+  Instructores y Consulta
+  Pública de Certificados.
+end note
+
+note bottom of CertModule
+  Genera el PDF con firma
+  y código QR de verificación.
+end note
 
 @enduml
