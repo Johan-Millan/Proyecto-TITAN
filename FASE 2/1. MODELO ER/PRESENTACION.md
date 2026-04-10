@@ -44,10 +44,10 @@ SELECT monto, id_factura
 FROM pagos
 WHERE monto BETWEEN 200000 AND 500000;
 
--- Cursos entre 20 y 60 horas
-SELECT nombre_curso, intensidad_horaria
-FROM cursos
-WHERE intensidad_horaria BETWEEN 20 AND 60;
+-- Certificados que vencen entre el 1 de marzo y el 30 de marzo de 2026
+SELECT *
+FROM certificados
+WHERE fecha_vencimiento BETWEEN '2026-03-01' AND '2026-03-30';
 
 -- Accidentes en febrero 2025
 SELECT lugar, fecha
