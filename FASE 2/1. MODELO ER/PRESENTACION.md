@@ -205,7 +205,7 @@ FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE RES
  
 ---
  
-### 📄 `documentos` → `usuarios` / `trabajadores`
+### `documentos` → `usuarios` / `trabajadores`
 **SET NULL**
 ```sql
 FOREIGN KEY (id_usuario)    REFERENCES usuarios(id_usuario)       ON DELETE SET NULL
