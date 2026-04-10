@@ -19,7 +19,8 @@ CREATE TABLE empresas(
 );
 CREATE TABLE trabajadores (
     id_trabajador INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_completo VARCHAR(150) NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+	apellido VARCHAR(150) NOT NULL,
     id_tipo INT, 
     numero_identificacion BIGINT NOT NULL UNIQUE,
     telefono BIGINT,
@@ -30,7 +31,7 @@ CREATE TABLE trabajadores (
 );
 CREATE TABLE usuarios(
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_usuario VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(100),
     telefono bigint,
     id_rol INT,
@@ -61,8 +62,8 @@ CREATE TABLE certificados(
     FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador),
     FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
 );
-CREATE TABLE equipos(
-    id_equipo INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE indumentaria(
+    id_indumentaria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
     descripcion VARCHAR(200)
 );
@@ -70,10 +71,10 @@ CREATE TABLE equipos(
 CREATE TABLE inspecciones_equipos(
     id_inspeccion INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE,
-    id_equipo INT,
+    id_indumentaria INT,
     id_usuario INT,
     observaciones VARCHAR(200),
-    FOREIGN KEY (id_equipo) REFERENCES equipos(id_equipo),
+    FOREIGN KEY (id_indumentaria) REFERENCES indumentaria(id_indumentaria),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 CREATE TABLE metodo_pago(
@@ -233,7 +234,7 @@ CREATE TABLE certificados_equipos(
 
 SELECT 
     cert.codigo, 
-    u.nombre_usuario,
+    u.nombre,
     cert.fecha_vencimiento,
     DATEDIFF(cert.fecha_vencimiento, CURDATE()) AS dias_restantes
 FROM certificados cert
@@ -252,7 +253,7 @@ JOIN detalle_factura df ON df.id_factura = f.id_factura
 GROUP BY e.id_empresa
 ORDER BY total_facturado DESC;
 SELECT 
-    t.nombre_completo, 
+    t.nombre, 
     c.nombre_curso, 
     cert.codigo, 
     cert.fecha_vencimiento
@@ -264,7 +265,7 @@ SELECT
     pc.fecha,
     pc.hora,
     c.nombre_curso,
-    u.nombre_usuario AS estudiante,
+    u.nombre AS estudiante,
     e.nombre AS empresa_cliente,
     i.estado AS estado_inscripcion
 FROM programacion_cursos pc
