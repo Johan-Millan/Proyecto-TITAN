@@ -1,1 +1,108 @@
+Relaciones críticas (NO perder datos)
+trabajadores → empresas
 
+👉 RECOMENDADO: RESTRICT
+
+FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa) ON DELETE RESTRICT
+
+💡 ¿Por qué?
+
+No quieres borrar una empresa y perder trabajadores
+Primero debes reubicar o eliminar trabajadores manualmente
+👤 usuarios → roles / tipo_identificacion
+
+👉 RECOMENDADO: RESTRICT
+
+💡 Porque:
+
+Son tablas base del sistema
+No deberían eliminarse si están en uso
+📄 documentos → usuarios / trabajadores
+
+👉 RECOMENDADO: SET NULL
+
+ON DELETE SET NULL
+
+💡 Porque:
+
+El documento puede seguir existiendo aunque el usuario ya no
+Mantienes historial (muy importante en sistemas reales)
+🎓 inscripciones → trabajadores
+
+👉 RECOMENDADO: CASCADE
+
+ON DELETE CASCADE
+
+💡 Porque:
+
+Si eliminas un trabajador, sus inscripciones ya no sirven
+Limpieza automática
+📅 asistencias → inscripciones
+
+👉 RECOMENDADO: CASCADE
+
+💡 Porque:
+
+La asistencia depende totalmente de la inscripción
+🧪 respuestas → preguntas
+
+👉 RECOMENDADO: CASCADE
+
+💡 Porque:
+
+Si borras una pregunta, sus respuestas no tienen sentido
+🧾 detalle_factura → facturas
+
+👉 RECOMENDADO: CASCADE
+
+💡 Porque:
+
+Es un clásico: si borras factura → borras detalles
+💰 pagos → facturas
+
+👉 ⚠ RECOMENDADO: RESTRICT
+
+💡 Porque:
+
+No deberías borrar facturas con pagos (tema contable/legal)
+Esto es MUY importante en sistemas reales
+🚨 alertas → usuarios
+
+👉 RECOMENDADO: SET NULL
+
+💡 Porque:
+
+Puedes querer mantener la alerta aunque el usuario ya no exista
+🏥 salud → trabajadores
+
+👉 ⚠ RECOMENDADO: RESTRICT
+
+💡 Porque:
+
+Son datos médicos (historial importante)
+No deberían borrarse automáticamente
+⚠ accidentes → trabajadores
+
+👉 ⚠ RECOMENDADO: RESTRICT
+
+💡 Porque:
+
+Información legal
+Nunca se debería borrar por cascada
+🧠 RESUMEN FÁCIL
+Tipo de dato	Qué usar
+Datos críticos (legal, historial)	🔴 RESTRICT
+Datos dependientes (hijos claros)	🟢 CASCADE
+Datos opcionales / historial	🟡 SET NULL
+🔥 REGLA DE ORO (IMPORTANTE)
+❌ Nunca uses CASCADE en datos financieros o legales
+❌ Nunca borres historial importante automáticamente
+✅ Usa CASCADE solo en datos “desechables”
+✅ Usa RESTRICT cuando tengas duda
+🚀 CONCLUSIÓN
+
+Para tu sistema tipo TITAN:
+
+🟢 CASCADE → inscripciones, respuestas, detalles
+🟡 SET NULL → documentos, alertas
+🔴 RESTRICT → empresas, trabajadores, pagos, accidentes
