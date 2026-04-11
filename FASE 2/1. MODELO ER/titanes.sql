@@ -1,16 +1,16 @@
 CREATE DATABASE titan;
 USE titan;
 CREATE TABLE roles(
-    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    id_rol INT PRIMARY KEY AUTO_INCREMENT,
     nombre_rol VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE tipo_identificacion(
-    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    id_tipo INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(20) NOT NULL
 );
 CREATE TABLE empresas(
-    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+    id_empresa INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(150) NOT NULL,
     nit INT NOT NULL,
     direccion VARCHAR(200),
@@ -18,7 +18,7 @@ CREATE TABLE empresas(
     correo VARCHAR(100)
 );
 CREATE TABLE trabajadores (
-    id_trabajador INT AUTO_INCREMENT PRIMARY KEY,
+    id_trabajador INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(150) NOT NULL,
 	apellido VARCHAR(150) NOT NULL,
     id_tipo INT, 
@@ -30,7 +30,7 @@ CREATE TABLE trabajadores (
     FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa)
 );
 CREATE TABLE usuarios(
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(100),
     telefono bigint,
@@ -45,13 +45,13 @@ CREATE TABLE usuarios(
     FOREIGN KEY (id_tipo) REFERENCES tipo_identificacion(id_tipo)
 );
 CREATE TABLE cursos(
-    id_curso INT AUTO_INCREMENT PRIMARY KEY,
+    id_curso INT PRIMARY KEY AUTO_INCREMENT,
     nombre_curso VARCHAR(100),
     intensidad_horaria INT
 );
 
 CREATE TABLE certificados(
-    id_certificado INT AUTO_INCREMENT PRIMARY KEY,
+    id_certificado INT PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(20),
     fecha_emision DATE,
     fecha_vencimiento DATE,
@@ -63,13 +63,13 @@ CREATE TABLE certificados(
     FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
 );
 CREATE TABLE indumentaria(
-    id_indumentaria INT AUTO_INCREMENT PRIMARY KEY,
+    id_indumentaria INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100),
     descripcion VARCHAR(200)
 );
 
 CREATE TABLE inspecciones_equipos(
-    id_inspeccion INT AUTO_INCREMENT PRIMARY KEY,
+    id_inspeccion INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     id_indumentaria INT,
     id_usuario INT,
@@ -78,19 +78,19 @@ CREATE TABLE inspecciones_equipos(
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 CREATE TABLE metodo_pago(
-    id_metodo INT AUTO_INCREMENT PRIMARY KEY,
+    id_metodo INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50)
 );
 
 CREATE TABLE facturas(
-    id_factura INT AUTO_INCREMENT PRIMARY KEY,
+    id_factura INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     id_empresa INT,
     FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa)
 );
 
 CREATE TABLE detalle_factura(
-    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_detalle INT PRIMARY KEY AUTO_INCREMENT,
     id_factura INT,
     descripcion VARCHAR(100),
     valor DECIMAL(10,2),
@@ -98,7 +98,7 @@ CREATE TABLE detalle_factura(
 );
 
 CREATE TABLE pagos(
-    id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    id_pago INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     monto DECIMAL(10,2),
     id_factura INT,
@@ -107,7 +107,7 @@ CREATE TABLE pagos(
     FOREIGN KEY (id_metodo) REFERENCES metodo_pago(id_metodo)
 );
 CREATE TABLE documentos(
-    id_documento INT AUTO_INCREMENT PRIMARY KEY,
+    id_documento INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100),
     descripcion VARCHAR(200),
     ruta_archivo VARCHAR(255) NOT NULL, -- ¡Importante para saber dónde está el PDF!
@@ -117,7 +117,7 @@ CREATE TABLE documentos(
     FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
 );
 CREATE TABLE salud(
-    id_salud INT AUTO_INCREMENT PRIMARY KEY,
+    id_salud INT PRIMARY KEY AUTO_INCREMENT,
     apto ENUM('SI','NO'),
     restricciones VARCHAR(300),
     observaciones VARCHAR(500),
@@ -127,7 +127,7 @@ CREATE TABLE salud(
     FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
 );
 CREATE TABLE disponibilidad(
-    id_disponibilidad INT AUTO_INCREMENT PRIMARY KEY,
+    id_disponibilidad INT PRIMARY KEY AUTO_INCREMENT,
     fecha_inicio DATETIME,
     fecha_fin DATETIME,
     disponible ENUM('SI','NO'),
@@ -135,19 +135,19 @@ CREATE TABLE disponibilidad(
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 CREATE TABLE evaluaciones(
-    id_evaluacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_evaluacion INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100)
 );
 
 CREATE TABLE preguntas(
-    id_pregunta INT AUTO_INCREMENT PRIMARY KEY,
+    id_pregunta INT PRIMARY KEY AUTO_INCREMENT,
     pregunta TEXT,
     id_evaluacion INT,
     FOREIGN KEY (id_evaluacion) REFERENCES evaluaciones(id_evaluacion)
 );
 
 CREATE TABLE respuestas(
-    id_respuesta INT AUTO_INCREMENT PRIMARY KEY,
+    id_respuesta INT PRIMARY KEY AUTO_INCREMENT,
     respuesta TEXT,
     es_correcta BOOLEAN,
     id_pregunta INT,
@@ -155,7 +155,7 @@ CREATE TABLE respuestas(
 );
 
 CREATE TABLE evaluaciones_presentadas(
-    id_presentada INT AUTO_INCREMENT PRIMARY KEY,
+    id_presentada INT PRIMARY KEY AUTO_INCREMENT,
     id_trabajador INT,
     id_evaluacion INT,
     fecha DATE,
@@ -164,7 +164,7 @@ CREATE TABLE evaluaciones_presentadas(
 );
 
 CREATE TABLE resultados(
-    id_resultado INT AUTO_INCREMENT PRIMARY KEY,
+    id_resultado INT PRIMARY KEY AUTO_INCREMENT,
     id_presentada INT,
     puntaje DECIMAL(5,2),
     FOREIGN KEY (id_presentada) REFERENCES evaluaciones_presentadas(id_presentada)
@@ -175,7 +175,7 @@ CREATE TABLE tipos_accidente(
 );
 
 CREATE TABLE accidentes(
-    id_accidente INT AUTO_INCREMENT PRIMARY KEY,
+    id_accidente INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     lugar VARCHAR(200),
     id_trabajador INT,
@@ -185,12 +185,12 @@ CREATE TABLE accidentes(
     FOREIGN KEY (id_tipo_accidente) REFERENCES tipos_accidente(id_tipo_accidente)
 );
 CREATE TABLE tipos_alerta(
-    id_tipo_alerta INT AUTO_INCREMENT PRIMARY KEY,
+    id_tipo_alerta INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100)
 );
 
 CREATE TABLE alertas(
-    id_alerta INT AUTO_INCREMENT PRIMARY KEY,
+    id_alerta INT PRIMARY KEY AUTO_INCREMENT,
     id_tipo_alerta INT,
     fecha_vencimiento DATE,
     estado ENUM('pendiente','enviada','vencida'),
@@ -199,7 +199,7 @@ CREATE TABLE alertas(
     FOREIGN KEY (id_tipo_alerta) REFERENCES tipos_alerta(id_tipo_alerta)
 );
 CREATE TABLE programacion_cursos(
-    id_programacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_programacion INT PRIMARY KEY AUTO_INCREMENT,
     id_curso INT,
     fecha DATE,
     hora TIME,
@@ -209,7 +209,7 @@ CREATE TABLE programacion_cursos(
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 CREATE TABLE inscripciones(
-    id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
+    id_inscripcion INT PRIMARY KEY AUTO_INCREMENT,
     id_programacion INT,
     id_trabajador INT,
     estado ENUM('inscrito','cancelado'),
@@ -217,19 +217,19 @@ CREATE TABLE inscripciones(
     FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
 );
 CREATE TABLE asistencias(
-    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
+    id_asistencia INT PRIMARY KEY AUTO_INCREMENT,
     id_inscripcion INT,
     asistio BOOLEAN,
     FOREIGN KEY (id_inscripcion) REFERENCES inscripciones(id_inscripcion)
 );
 
 CREATE TABLE certificados_equipos(
-    id_certificado_equipo INT AUTO_INCREMENT PRIMARY KEY,
-    id_equipo INT,
+    id_certificado_equipo INT PRIMARY KEY AUTO_INCREMENT,
+    id_indumentaria INT,
     fecha_emision DATE,
     fecha_vencimiento DATE,
     estado ENUM('apto','no_apto'),
-    FOREIGN KEY (id_equipo) REFERENCES equipos(id_equipo)
+    FOREIGN KEY (id_indumentaria) REFERENCES indumentaria(id_indumentaria)
 );
 
 INSERT INTO roles (nombre_rol) VALUES
@@ -245,16 +245,16 @@ INSERT INTO roles (nombre_rol) VALUES
 ('Invitado');
 
 INSERT INTO tipo_identificacion (nombre) VALUES
-('Cédula de ciudadanía'),
-('Tarjeta de identidad'),
-('Cédula de extranjería'),
+('CC'),
+('TI'),
+('CE'),
 ('Pasaporte'),
-('Registro civil'),
+('RC'),
 ('NIT'),
 ('NUIP'),
-('Permiso especial de permanencia'),
-('Documento nacional de identidad'),
-('Licencia de conducción');
+('PE'),
+('DNI'),
+('PPT');
 
 INSERT INTO empresas (nombre, nit, direccion, telefono, correo) VALUES
 ('Constructora Andina S.A.S', 900123456, 'Bogotá D.C, Calle 100 #10-20', '6011234567', 'contacto@andina.com'),
@@ -388,17 +388,6 @@ INSERT INTO pagos (fecha, monto, id_factura, id_metodo) VALUES
 ('2025-03-09', 180000.00, 9, 9),
 ('2025-03-10', 250000.00, 10, 10);
 
-INSERT INTO resultados (id_presentada, puntaje) VALUES
-(1, 95.00),
-(2, 88.50),
-(3, 70.00),
-(4, 92.00),
-(5, 85.00),
-(6, 60.00),
-(7, 78.00),
-(8, 90.00),
-(9, 82.50),
-(10, 68.00);
 
 INSERT INTO tipos_accidente (nombre) VALUES
 ('Caída de altura'),
@@ -569,7 +558,17 @@ INSERT INTO evaluaciones_presentadas (id_trabajador, id_evaluacion, fecha) VALUE
 (8, 8, '2025-03-08'),
 (9, 9, '2025-03-09'),
 (10, 10, '2025-03-10');
-
+INSERT INTO resultados (id_presentada, puntaje) VALUES
+(1, 95.00),
+(2, 88.50),
+(3, 70.00),
+(4, 92.00),
+(5, 85.00),
+(6, 60.00),
+(7, 78.00),
+(8, 90.00),
+(9, 82.50),
+(10, 68.00);
 INSERT INTO alertas (id_tipo_alerta, fecha_vencimiento, estado, id_usuario) VALUES
 (1, '2025-04-15', 'pendiente', 1),
 (2, '2025-04-16', 'enviada', 2),
@@ -618,7 +617,7 @@ INSERT INTO asistencias (id_inscripcion, asistio) VALUES
 (9, TRUE),
 (10, FALSE);
 
-certificados_equipos (id_equipo, fecha_emision, fecha_vencimiento, estado) VALUES
+INSERT INTO certificados_equipos (id_indumentaria, fecha_emision, fecha_vencimiento, estado) VALUES
 (1, '2025-01-01', '2026-01-01', 'apto'),
 (2, '2025-01-05', '2026-01-05', 'apto'),
 (3, '2025-01-10', '2026-01-10', 'no_apto'),
