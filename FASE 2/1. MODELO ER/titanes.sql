@@ -9,40 +9,24 @@ CREATE TABLE tipo_identificacion(
     id_tipo INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(20) NOT NULL
 );
-CREATE TABLE empresas(
-    id_empresa INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(150) NOT NULL,
-    nit INT NOT NULL,
-    direccion VARCHAR(200),
-    telefono VARCHAR(20),
-    correo VARCHAR(100)
-);
-CREATE TABLE trabajadores (
-    id_trabajador INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(150) NOT NULL,
-	apellido VARCHAR(150) NOT NULL,
-    id_tipo INT, 
-    numero_identificacion BIGINT NOT NULL UNIQUE,
-    telefono BIGINT,
-    correo VARCHAR(100), 
-    id_empresa INT, 
-    FOREIGN KEY (id_tipo) REFERENCES tipo_identificacion(id_tipo),
-    FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa) ON DELETE RESTRICT
-);
-CREATE TABLE usuarios(
+CREATE TABLE usuarios (
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    correo VARCHAR(100),
-    telefono bigint,
-    id_rol INT,
+    tipo_registro ENUM('empresa', 'trabajador', 'usuario') NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    apellido VARCHAR(150),
     id_tipo INT,
-    numero_identificacion bigint NOT NULL,
+    numero_identificacion BIGINT,
+    nit BIGINT,
+    direccion VARCHAR(200),
+    telefono BIGINT,
+    correo VARCHAR(100),
     password_hash VARCHAR(255),
     estado_activo BOOLEAN DEFAULT TRUE,
     id_empresa INT,
-	FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa),
+    id_rol INT,
+    FOREIGN KEY (id_tipo) REFERENCES tipo_identificacion(id_tipo),
     FOREIGN KEY (id_rol) REFERENCES roles(id_rol),
-    FOREIGN KEY (id_tipo) REFERENCES tipo_identificacion(id_tipo)
+    FOREIGN KEY (id_empresa) REFERENCES usuarios(id_usuario)
 );
 CREATE TABLE cursos(
     id_curso INT PRIMARY KEY AUTO_INCREMENT,
@@ -57,9 +41,8 @@ CREATE TABLE certificados(
     fecha_vencimiento DATE,
     id_trabajador INT,
     id_curso INT,
-    id_empresa INT,
-	FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa),
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador),
+    id_usuario INT,
+	FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
     FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
 );
 CREATE TABLE indumentaria(
@@ -86,7 +69,7 @@ CREATE TABLE facturas(
     id_factura INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     id_empresa INT,
-    FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa)
+    FOREIGN KEY (id_empresa) REFERENCES usuarios(id_usuario)
 );
 
 CREATE TABLE detalle_factura(
@@ -112,9 +95,7 @@ CREATE TABLE documentos(
     descripcion VARCHAR(200),
     ruta_archivo VARCHAR(255) NOT NULL, -- ¡Importante para saber dónde está el PDF!
     id_usuario INT NULL, -- Será nulo si el documento es de un trabajador
-    id_trabajador INT NULL, -- Será nulo si el documento es de un instructor/admin
-	FOREIGN KEY (id_usuario)    REFERENCES usuarios(id_usuario)       ON DELETE SET NULL,
-	FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE SET NULL
+	FOREIGN KEY (id_usuario)    REFERENCES usuarios(id_usuario)       ON DELETE SET NULL
 );
 CREATE TABLE salud(
     id_salud INT PRIMARY KEY AUTO_INCREMENT,
@@ -124,7 +105,7 @@ CREATE TABLE salud(
     fecha_examen DATE,
     fecha_vencimiento DATE,
     id_trabajador INT,
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE RESTRICT
+    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario) ON DELETE RESTRICT
 );
 CREATE TABLE disponibilidad(
     id_disponibilidad INT PRIMARY KEY AUTO_INCREMENT,
@@ -159,7 +140,7 @@ CREATE TABLE evaluaciones_presentadas(
     id_trabajador INT,
     id_evaluacion INT,
     fecha DATE,
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador),
+    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario),
     FOREIGN KEY (id_evaluacion) REFERENCES evaluaciones(id_evaluacion)
 );
 
@@ -181,7 +162,7 @@ CREATE TABLE accidentes(
     id_trabajador INT,
     id_tipo_accidente INT,
     descripcion TEXT,
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE RESTRICT,
+    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario) ON DELETE RESTRICT,
     FOREIGN KEY (id_tipo_accidente) REFERENCES tipos_accidente(id_tipo_accidente)
 );
 CREATE TABLE tipos_alerta(
@@ -214,7 +195,7 @@ CREATE TABLE inscripciones(
     id_trabajador INT,
     estado ENUM('inscrito','cancelado'),
     FOREIGN KEY (id_programacion) REFERENCES programacion_cursos(id_programacion),
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE CASCADE
+    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 CREATE TABLE asistencias(
     id_asistencia INT PRIMARY KEY AUTO_INCREMENT,
@@ -256,42 +237,24 @@ INSERT INTO tipo_identificacion (nombre) VALUES
 ('DNI'),
 ('PPT');
 
-INSERT INTO empresas (nombre, nit, direccion, telefono, correo) VALUES
-('Constructora Andina S.A.S', 900123456, 'Bogotá D.C, Calle 100 #10-20', '6011234567', 'contacto@andina.com'),
-('Servicios Industriales Titan S.A.S', 901234567, 'Medellín, Carrera 45 #30-15', '6042345678', 'info@titan.com'),
-('Seguridad Alturas Colombia', 902345678, 'Cali, Avenida 6N #25-40', '6023456789', 'servicio@alturas.com'),
-('Logística Integral SAS', 903456789, 'Barranquilla, Calle 80 #50-10', '6054567890', 'logistica@integral.com'),
-('Ingeniería Total Ltda', 904567890, 'Cartagena, Bocagrande #12-34', '6055678901', 'contacto@ingtotal.com'),
-('Soluciones Verticales SAS', 905678901, 'Bucaramanga, Carrera 33 #48-22', '6076789012', 'info@verticales.com'),
-('Alturas Seguras Colombia', 906789012, 'Pereira, Calle 21 #10-55', '6067890123', 'contacto@seguras.com'),
-('Proyectos Industriales SAS', 907890123, 'Manizales, Av Santander #65-10', '6068901234', 'proyectos@industriales.com'),
-('Capacitación y Riesgos SAS', 908901234, 'Cúcuta, Calle 10 #5-20', '6079012345', 'capacitacion@riesgos.com'),
-('Estructuras Modernas SAS', 909012345, 'Santa Marta, Rodadero #8-15', '6050123456', 'info@estructuras.com');
+INSERT INTO usuarios 
+(tipo_registro, nombre, apellido, id_tipo, numero_identificacion, nit, direccion, telefono, correo, password_hash, id_rol, id_empresa)
+VALUES
+-- EMPRESAS
+('empresa', 'Tech Solutions SAS', NULL, NULL, NULL, 900123456, 'Calle 123 #45-67', 3001234567, 'info@techsolutions.com', NULL, NULL, NULL),
+('empresa', 'Innovatech Ltda', NULL, NULL, NULL, 901987654, 'Carrera 10 #20-30', 3109876543, 'contacto@innovatech.com', NULL, NULL, NULL),
 
-INSERT INTO trabajadores (nombre, apellido, id_tipo, numero_identificacion, telefono, correo, id_empresa) VALUES
-('Carlos', 'Gomez', 1, 1012345678, 3001234567, 'carlos.gomez@gmail.com', 1),
-('Laura', 'Martinez', 1, 1023456789, 3012345678, 'laura.martinez@gmail.com', 2),
-('Andres', 'Rodriguez', 2, 1034567890, 3023456789, 'andres.rodriguez@gmail.com', 3),
-('Diana', 'Lopez', 1, 1045678901, 3034567890, 'diana.lopez@gmail.com', 4),
-('Jorge', 'Hernandez', 3, 1056789012, 3045678901, 'jorge.hernandez@gmail.com', 5),
-('Camila', 'Ramirez', 1, 1067890123, 3056789012, 'camila.ramirez@gmail.com', 6),
-('Felipe', 'Torres', 4, 1078901234, 3067890123, 'felipe.torres@gmail.com', 7),
-('Valentina', 'Castro', 1, 1089012345, 3078901234, 'valentina.castro@gmail.com', 8),
-('Santiago', 'Morales', 1, 1090123456, 3089012345, 'santiago.morales@gmail.com', 9),
-('Natalia', 'Vargas', 2, 1101234567, 3090123456, 'natalia.vargas@gmail.com', 10);
+-- TRABAJADORES
+('trabajador', 'Carlos', 'Perez', 1, 1234567890, NULL, NULL, 3001112233, 'carlos.perez@gmail.com', NULL, NULL, 1),
+('trabajador', 'Laura', 'Gomez', 1, 1098765432, NULL, NULL, 3012223344, 'laura.gomez@gmail.com', NULL, NULL, 2),
+('trabajador', 'Andres', 'Lopez', 1, 1122334455, NULL, NULL, 3023334455, 'andres.lopez@gmail.com', NULL, NULL, 1),
 
-INSERT INTO usuarios (nombre, correo, telefono, id_rol, id_tipo, numero_identificacion, password_hash, estado_activo, id_empresa) VALUES
-('Carlos Gomez', 'carlos.gomez@gmail.com', 3001234567, 1, 1, 1012345678, 'hash123', TRUE, 1),
-('Laura Martinez', 'laura.martinez@gmail.com', 3012345678, 2, 1, 1023456789, 'hash123', TRUE, 2),
-('Andres Rodriguez', 'andres.rodriguez@gmail.com', 3023456789, 3, 2, 1034567890, 'hash123', TRUE, 3),
-('Diana Lopez', 'diana.lopez@gmail.com', 3034567890, 4, 1, 1045678901, 'hash123', TRUE, 4),
-('Jorge Hernandez', 'jorge.hernandez@gmail.com', 3045678901, 5, 3, 1056789012, 'hash123', TRUE, 5),
-('Camila Ramirez', 'camila.ramirez@gmail.com', 3056789012, 2, 1, 1067890123, 'hash123', TRUE, 6),
-('Felipe Torres', 'felipe.torres@gmail.com', 3067890123, 6, 4, 1078901234, 'hash123', TRUE, 7),
-('Valentina Castro', 'valentina.castro@gmail.com', 3078901234, 7, 1, 1089012345, 'hash123', TRUE, 8),
-('Santiago Morales', 'santiago.morales@gmail.com', 3089012345, 8, 1, 1090123456, 'hash123', TRUE, 9),
-('Natalia Vargas', 'natalia.vargas@gmail.com', 3090123456, 9, 2, 1101234567, 'hash123', FALSE, 10);
-
+-- USUARIOS
+('usuario', 'Admin', 'Principal', 1, 1000000001, NULL, NULL, 3201111111, 'admin@techsolutions.com', 'hash123', 1, 1),
+('usuario', 'Maria', 'Rodriguez', 1, 1000000002, NULL, NULL, 3202222222, 'maria@innovatech.com', 'hash456', 2, 2),
+('usuario', 'Juan', 'Martinez', 1, 1000000003, NULL, NULL, 3203333333, 'juan@gmail.com', 'hash789', 2, 1),
+('usuario', 'Sofia', 'Ramirez', 1, 1000000004, NULL, NULL, 3204444444, 'sofia@gmail.com', 'hash321', 3, 2),
+('usuario', 'Luis', 'Fernandez', 1, 1000000005, NULL, NULL, 3205555555, 'luis@gmail.com', 'hash654', 2, 1);
 INSERT INTO cursos (nombre_curso, intensidad_horaria) VALUES
 ('Trabajador autorizado', 32),
 ('Reentrenamiento en alturas', 8),
