@@ -39,7 +39,6 @@ CREATE TABLE certificados(
     codigo VARCHAR(20),
     fecha_emision DATE,
     fecha_vencimiento DATE,
-    id_trabajador INT,
     id_curso INT,
     id_usuario INT,
 	FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
@@ -51,7 +50,7 @@ CREATE TABLE indumentaria(
     descripcion VARCHAR(200)
 );
 
-CREATE TABLE inspecciones_equipos(
+CREATE TABLE inspecciones_indumentaria(
     id_inspeccion INT PRIMARY KEY AUTO_INCREMENT,
     fecha DATE,
     id_indumentaria INT,
@@ -137,10 +136,10 @@ CREATE TABLE respuestas(
 
 CREATE TABLE evaluaciones_presentadas(
     id_presentada INT PRIMARY KEY AUTO_INCREMENT,
-    id_trabajador INT,
+    id_usuario INT,
     id_evaluacion INT,
     fecha DATE,
-    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
     FOREIGN KEY (id_evaluacion) REFERENCES evaluaciones(id_evaluacion)
 );
 
@@ -192,10 +191,10 @@ CREATE TABLE programacion_cursos(
 CREATE TABLE inscripciones(
     id_inscripcion INT PRIMARY KEY AUTO_INCREMENT,
     id_programacion INT,
-    id_trabajador INT,
+    id_usuario INT,
     estado ENUM('inscrito','cancelado'),
     FOREIGN KEY (id_programacion) REFERENCES programacion_cursos(id_programacion),
-    FOREIGN KEY (id_trabajador) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 CREATE TABLE asistencias(
     id_asistencia INT PRIMARY KEY AUTO_INCREMENT,
@@ -204,7 +203,7 @@ CREATE TABLE asistencias(
     FOREIGN KEY (id_inscripcion) REFERENCES inscripciones(id_inscripcion) ON DELETE CASCADE
 );
 
-CREATE TABLE certificados_equipos(
+CREATE TABLE certificados_indumentaria(
     id_certificado_equipo INT PRIMARY KEY AUTO_INCREMENT,
     id_indumentaria INT,
     fecha_emision DATE,
@@ -249,17 +248,17 @@ INSERT INTO cursos (nombre_curso, intensidad_horaria) VALUES
 ('Reentrenamiento en alturas', 8),
 ('Coordinador de trabajo en alturas', 80);
 
-INSERT INTO certificados (codigo, fecha_emision, fecha_vencimiento, id_trabajador, id_curso, id_empresa) VALUES
-('CERT-001', '2025-01-15', '2026-01-15', 1, 1, 1),
-('ART-002', '2025-02-10', '2026-02-10', 2, 2, 2),
-('TAN-003', '2025-03-05', '2026-03-05', 3, 3, 3),
-('TAN-004', '2025-01-20', '2026-01-20', 4, 3, 4),
-('ART-005', '2025-02-25', '2026-02-25', 5, 1, 5),
-('ART-006', '2025-03-12', '2026-03-12', 6, 2, 6),
-('CERT-007', '2025-01-30', '2026-01-30', 7, 3, 7),
-('TAN-008', '2025-02-18', '2026-02-18', 8, 1, 8),
-('CERT-009', '2025-03-22', '2026-03-22', 9, 1, 9),
-('ART-010', '2025-04-01', '2026-04-01', 10, 2, 10);
+INSERT INTO certificados (codigo, fecha_emision, fecha_vencimiento, id_curso, id_usuario) VALUES
+('CERT-001', '2025-01-15', '2026-01-15', 1, 6),
+('ART-002', '2025-02-10', '2026-02-10', 2, 7),
+('TAN-003', '2025-03-05', '2026-03-05', 3, 8),
+('TAN-004', '2025-01-20', '2026-01-20', 3, 9),
+('ART-005', '2025-02-25', '2026-02-25', 1, 10),
+('ART-006', '2025-03-12', '2026-03-12', 2, 6),
+('CERT-007', '2025-01-30', '2026-01-30', 3, 7),
+('TAN-008', '2025-02-18', '2026-02-18', 1, 8),
+('CERT-009', '2025-03-22', '2026-03-22', 1, 9),
+('ART-010', '2025-04-01', '2026-04-01', 2, 10);
 
 INSERT INTO indumentaria (nombre, descripcion) VALUES
 ('Casco de seguridad', 'Protección para la cabeza contra impactos y caídas de objetos'),
@@ -320,16 +319,14 @@ INSERT INTO detalle_factura (id_factura, descripcion, valor) VALUES
 (10, 'Riesgo eléctrico', 250000.00);
 
 INSERT INTO pagos (fecha, monto, id_factura, id_metodo) VALUES
-('2025-03-01', 350000.00, 1, 1),
-('2025-03-02', 500000.00, 2, 2),
-('2025-03-03', 200000.00, 3, 3),
-('2025-03-04', 800000.00, 4, 4),
-('2025-03-05', 450000.00, 5, 5),
-('2025-03-06', 300000.00, 6, 6),
-('2025-03-07', 150000.00, 7, 7),
-('2025-03-08', 120000.00, 8, 8),
-('2025-03-09', 180000.00, 9, 9),
-('2025-03-10', 250000.00, 10, 10);
+('2025-03-01', 350000, 1, 1),
+('2025-03-02', 500000, 2, 2),
+('2025-03-03', 200000, 3, 3),
+('2025-03-04', 800000, 4, 4),
+('2025-03-05', 450000, 5, 5),
+('2025-03-06', 300000, 6, 6),
+('2025-03-07', 150000, 7, 7),
+('2025-03-08', 120000, 8, 8);
 
 
 INSERT INTO tipos_accidente (nombre) VALUES
@@ -369,17 +366,17 @@ INSERT INTO tipos_alerta (nombre) VALUES
 ('Alerta general');
 
 
-INSERT INTO documentos (nombre, descripcion, ruta_archivo, id_usuario, id_trabajador) VALUES
-('Certificado Alturas Carlos', 'Certificado curso alturas básico', '/docs/cert_carlos.pdf', NULL, 1),
-('Hoja de vida Laura', 'Documento hoja de vida', '/docs/hv_laura.pdf', 2, NULL),
-('Certificado Andres', 'Certificado reentrenamiento', '/docs/cert_andres.pdf', NULL, 3),
-('Contrato Diana', 'Contrato laboral firmado', '/docs/contrato_diana.pdf', 4, NULL),
-('Certificado Jorge', 'Curso avanzado alturas', '/docs/cert_jorge.pdf', NULL, 5),
-('Documento Camila', 'Identificación escaneada', '/docs/doc_camila.pdf', 6, NULL),
-('Certificado Felipe', 'Rescate en alturas', '/docs/cert_felipe.pdf', NULL, 7),
-('Hoja de vida Valentina', 'HV actualizada', '/docs/hv_valentina.pdf', 8, NULL),
-('Certificado Santiago', 'Seguridad industrial', '/docs/cert_santiago.pdf', NULL, 9),
-('Documento Natalia', 'Contrato y anexos', '/docs/doc_natalia.pdf', 10, NULL);
+INSERT INTO documentos (nombre, descripcion, ruta_archivo, id_usuario) VALUES
+('Certificado Alturas Carlos', 'Certificado curso alturas básico', '/docs/cert_carlos.pdf', NULL),
+('Hoja de vida Laura', 'Documento hoja de vida', '/docs/hv_laura.pdf', 7),
+('Certificado Andres', 'Certificado reentrenamiento', '/docs/cert_andres.pdf', NULL),
+('Contrato Diana', 'Contrato laboral firmado', '/docs/contrato_diana.pdf', 8),
+('Certificado Jorge', 'Curso avanzado alturas', '/docs/cert_jorge.pdf', NULL),
+('Documento Camila', 'Identificación escaneada', '/docs/doc_camila.pdf', 9),
+('Certificado Felipe', 'Rescate en alturas', '/docs/cert_felipe.pdf', NULL),
+('Hoja de vida Valentina', 'HV actualizada', '/docs/hv_valentina.pdf', 10),
+('Certificado Santiago', 'Seguridad industrial', '/docs/cert_santiago.pdf', NULL),
+('Documento Natalia', 'Contrato y anexos', '/docs/doc_natalia.pdf', 6);
 
 INSERT INTO salud (apto, restricciones, observaciones, fecha_examen, fecha_vencimiento, id_trabajador) VALUES
 ('SI', 'Ninguna', 'Apto para trabajo en alturas', '2025-01-10', '2026-01-10', 1),
@@ -416,14 +413,15 @@ INSERT INTO preguntas (pregunta, id_evaluacion) VALUES
 ('¿Qué elemento es obligatorio para trabajos en alturas?', 1),
 ('¿Cada cuánto se debe realizar el reentrenamiento?', 3),
 ('¿Quién supervisa el trabajo en alturas?', 4),
-('¿Qué se debe hacer en caso de caída?', 5),
-('¿Qué es un espacio confinado?', 6),
-('¿Cuál es el primer paso en primeros auxilios?', 7),
-('¿Para qué sirve un extintor?', 8),
-('¿Qué es seguridad industrial?', 9),
-('¿Qué riesgo implica la electricidad?', 10);
+('¿Qué debe verificarse antes de iniciar un trabajo en alturas?', 1),
+('¿Cuál es la altura mínima considerada como trabajo en alturas?', 1),
+('¿Qué equipo se utiliza para detener caídas?', 2),
+('¿Cómo se debe usar correctamente un arnés de seguridad?', 2),
+('¿Qué sucede si no se realiza el reentrenamiento a tiempo?', 3),
+('¿Cuál es la función principal del coordinador de trabajo en alturas?', 4);
 
 INSERT INTO respuestas (respuesta, es_correcta, id_pregunta) VALUES
+
 -- Pregunta 1
 ('Evitar accidentes laborales', TRUE, 1),
 ('Aumentar la velocidad de trabajo', FALSE, 1),
@@ -449,63 +447,64 @@ INSERT INTO respuestas (respuesta, es_correcta, id_pregunta) VALUES
 ('Clientes', FALSE, 4),
 
 -- Pregunta 5
-('Activar plan de rescate', TRUE, 5),
-('Ignorar el evento', FALSE, 5),
-('Salir corriendo', FALSE, 5),
-('Apagar equipos', FALSE, 5),
+('Revisión de equipos y condiciones de seguridad', TRUE, 5),
+('Revisar el celular', FALSE, 5),
+('Hablar con compañeros', FALSE, 5),
+('Empezar sin revisar', FALSE, 5),
 
 -- Pregunta 6
-('Área con ventilación limitada', TRUE, 6),
-('Oficina abierta', FALSE, 6),
-('Parque', FALSE, 6),
-('Zona libre', FALSE, 6),
+('1.5 metros', TRUE, 6),
+('10 metros', FALSE, 6),
+('50 cm', FALSE, 6),
+('No hay altura mínima', FALSE, 6),
 
 -- Pregunta 7
-('Evaluar la escena', TRUE, 7),
-('Salir corriendo', FALSE, 7),
-('Ignorar', FALSE, 7),
-('Dormir', FALSE, 7),
+('Sistema de detención de caídas', TRUE, 7),
+('Guantes', FALSE, 7),
+('Casco', FALSE, 7),
+('Botas', FALSE, 7),
 
 -- Pregunta 8
-('Apagar incendios', TRUE, 8),
-('Cortar madera', FALSE, 8),
-('Medir temperatura', FALSE, 8),
-('Transportar objetos', FALSE, 8),
+('Ajustado al cuerpo y correctamente asegurado', TRUE, 8),
+('Suelto para mayor comodidad', FALSE, 8),
+('Solo en emergencias', FALSE, 8),
+('Sin conectar a línea de vida', FALSE, 8),
 
 -- Pregunta 9
-('Prevenir riesgos laborales', TRUE, 9),
-('Generar ventas', FALSE, 9),
-('Hacer publicidad', FALSE, 9),
-('Reducir personal', FALSE, 9),
+('El trabajador no podrá realizar actividades seguras', TRUE, 9),
+('No pasa nada', FALSE, 9),
+('Se vuelve más rápido', FALSE, 9),
+('Reduce costos', FALSE, 9),
 
 -- Pregunta 10
-('Electrocución', TRUE, 10),
-('Caídas leves', FALSE, 10),
-('Ruido', FALSE, 10),
-('Fatiga', FALSE, 10);
+('Supervisar y garantizar la seguridad del trabajo', TRUE, 10),
+('Realizar el trabajo operativo', FALSE, 10),
+('Ignorar riesgos', FALSE, 10),
+('Solo observar sin actuar', FALSE, 10);
 
-INSERT INTO evaluaciones_presentadas (id_trabajador, id_evaluacion, fecha) VALUES
+INSERT INTO evaluaciones_presentadas (id_usuario, id_evaluacion, fecha) VALUES
 (1, 1, '2025-03-01'),
 (2, 2, '2025-03-02'),
 (3, 3, '2025-03-03'),
 (4, 4, '2025-03-04'),
-(5, 5, '2025-03-05'),
-(6, 6, '2025-03-06'),
-(7, 7, '2025-03-07'),
-(8, 8, '2025-03-08'),
-(9, 9, '2025-03-09'),
-(10, 10, '2025-03-10');
+(5, 1, '2025-03-05'),
+(6, 2, '2025-03-06'),
+(7, 3, '2025-03-07'),
+(8, 4, '2025-03-08'),
+(9, 1, '2025-03-09'),
+(10, 2, '2025-03-10');
+
 INSERT INTO resultados (id_presentada, puntaje) VALUES
-(1, 95.00),
-(2, 88.50),
-(3, 70.00),
-(4, 92.00),
-(5, 85.00),
-(6, 60.00),
-(7, 78.00),
-(8, 90.00),
-(9, 82.50),
-(10, 68.00);
+(11, 95.00),
+(12, 88.50),
+(13, 70.00),
+(14, 92.00),
+(15, 85.00),
+(16, 60.00),
+(17, 78.00),
+(18, 90.00),
+(19, 82.50),
+(20, 68.00);
 INSERT INTO alertas (id_tipo_alerta, fecha_vencimiento, estado, id_usuario) VALUES
 (1, '2025-04-15', 'pendiente', 1),
 (2, '2025-04-16', 'enviada', 2),
@@ -530,7 +529,7 @@ INSERT INTO programacion_cursos (id_curso, fecha, hora, cupos, id_usuario) VALUE
 (1, '2025-04-18', '10:00:00', 20, 9),
 (2, '2025-04-19', '08:00:00', 25, 10);
 
-INSERT INTO inscripciones (id_programacion, id_trabajador, estado) VALUES
+INSERT INTO inscripciones (id_programacion, id_usuario, estado) VALUES
 (1, 1, 'inscrito'),
 (2, 2, 'inscrito'),
 (3, 3, 'cancelado'),
@@ -554,7 +553,7 @@ INSERT INTO asistencias (id_inscripcion, asistio) VALUES
 (9, TRUE),
 (10, FALSE);
 
-INSERT INTO certificados_equipos (id_indumentaria, fecha_emision, fecha_vencimiento, estado) VALUES
+INSERT INTO certificados_indumentaria (id_indumentaria, fecha_emision, fecha_vencimiento, estado) VALUES
 (1, '2025-01-01', '2026-01-01', 'apto'),
 (2, '2025-01-05', '2026-01-05', 'apto'),
 (3, '2025-01-10', '2026-01-10', 'no_apto'),
@@ -637,6 +636,11 @@ AND id_metodo IN (5,6,7);
 SELECT *
 FROM resultados
 WHERE puntaje BETWEEN 0 AND 69;
+
+SELECT *
+FROM programacion_cursos
+WHERE cupos BETWEEN 1 AND 15;
+
 
 SELECT *
 FROM programacion_cursos
