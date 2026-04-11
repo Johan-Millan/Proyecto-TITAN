@@ -216,14 +216,7 @@ CREATE TABLE certificados_equipos(
 INSERT INTO roles (nombre_rol) VALUES
 ('Administrador'),
 ('Usuario'),
-('Instructor'),
-('Coordinador'),
-('Supervisor'),
-('Cliente'),
-('Empleado'),
-('Gerente'),
-('Soporte Técnico'),
-('Invitado');
+('Instructor');
 
 INSERT INTO tipo_identificacion (nombre) VALUES
 ('CC'),
@@ -240,21 +233,17 @@ INSERT INTO tipo_identificacion (nombre) VALUES
 INSERT INTO usuarios 
 (tipo_registro, nombre, apellido, id_tipo, numero_identificacion, nit, direccion, telefono, correo, password_hash, id_rol, id_empresa)
 VALUES
--- EMPRESAS
 ('empresa', 'Tech Solutions SAS', NULL, NULL, NULL, 900123456, 'Calle 123 #45-67', 3001234567, 'info@techsolutions.com', NULL, NULL, NULL),
 ('empresa', 'Innovatech Ltda', NULL, NULL, NULL, 901987654, 'Carrera 10 #20-30', 3109876543, 'contacto@innovatech.com', NULL, NULL, NULL),
-
--- TRABAJADORES
 ('trabajador', 'Carlos', 'Perez', 1, 1234567890, NULL, NULL, 3001112233, 'carlos.perez@gmail.com', NULL, NULL, 1),
 ('trabajador', 'Laura', 'Gomez', 1, 1098765432, NULL, NULL, 3012223344, 'laura.gomez@gmail.com', NULL, NULL, 2),
 ('trabajador', 'Andres', 'Lopez', 1, 1122334455, NULL, NULL, 3023334455, 'andres.lopez@gmail.com', NULL, NULL, 1),
-
--- USUARIOS
 ('usuario', 'Admin', 'Principal', 1, 1000000001, NULL, NULL, 3201111111, 'admin@techsolutions.com', 'hash123', 1, 1),
 ('usuario', 'Maria', 'Rodriguez', 1, 1000000002, NULL, NULL, 3202222222, 'maria@innovatech.com', 'hash456', 2, 2),
 ('usuario', 'Juan', 'Martinez', 1, 1000000003, NULL, NULL, 3203333333, 'juan@gmail.com', 'hash789', 2, 1),
 ('usuario', 'Sofia', 'Ramirez', 1, 1000000004, NULL, NULL, 3204444444, 'sofia@gmail.com', 'hash321', 3, 2),
 ('usuario', 'Luis', 'Fernandez', 1, 1000000005, NULL, NULL, 3205555555, 'luis@gmail.com', 'hash654', 2, 1);
+
 INSERT INTO cursos (nombre_curso, intensidad_horaria) VALUES
 ('Trabajador autorizado', 32),
 ('Reentrenamiento en alturas', 8),
@@ -284,7 +273,7 @@ INSERT INTO indumentaria (nombre, descripcion) VALUES
 ('Mascarilla respiratoria', 'Protección contra partículas y contaminantes en el aire'),
 ('Cinturón de posicionamiento', 'Equipo para mantener estabilidad en trabajos en altura');
 
-INSERT INTO inspecciones_equipos (fecha, id_indumentaria, id_usuario, observaciones) VALUES
+INSERT INTO inspecciones_indumentaria (fecha, id_indumentaria, id_usuario, observaciones) VALUES
 ('2025-03-01', 1, 1, 'Casco en buen estado'),
 ('2025-03-02', 2, 2, 'Arnés con desgaste leve'),
 ('2025-03-03', 3, 3, 'Línea de vida apta para uso'),
@@ -304,9 +293,7 @@ INSERT INTO metodo_pago (nombre) VALUES
 ('PSE'),
 ('Nequi'),
 ('Daviplata'),
-('Cheque'),
-('Consignación bancaria'),
-('Pago contra entrega');
+('Consignación bancaria');
 
 INSERT INTO facturas (fecha, id_empresa) VALUES
 ('2025-03-01', 1),
@@ -422,13 +409,7 @@ INSERT INTO evaluaciones (nombre) VALUES
 ('Evaluación teórica trabajo en alturas'),
 ('Evaluación práctica trabajo en alturas'),
 ('Evaluación reentrenamiento'),
-('Evaluación coordinador de alturas'),
-('Evaluación rescate en alturas'),
-('Evaluación espacios confinados'),
-('Evaluación primeros auxilios'),
-('Evaluación manejo de extintores'),
-('Evaluación seguridad industrial'),
-('Evaluación riesgo eléctrico');
+('Evaluación coordinador de alturas');
 
 INSERT INTO preguntas (pregunta, id_evaluacion) VALUES
 ('¿Cuál es el objetivo principal del trabajo en alturas?', 1),
