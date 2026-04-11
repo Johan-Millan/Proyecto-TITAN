@@ -27,7 +27,7 @@ CREATE TABLE trabajadores (
     correo VARCHAR(100), 
     id_empresa INT, 
     FOREIGN KEY (id_tipo) REFERENCES tipo_identificacion(id_tipo),
-    FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa)
+    FOREIGN KEY (id_empresa) REFERENCES empresas(id_empresa) ON DELETE RESTRICT
 );
 CREATE TABLE usuarios(
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE detalle_factura(
     id_factura INT,
     descripcion VARCHAR(100),
     valor DECIMAL(10,2),
-    FOREIGN KEY (id_factura) REFERENCES facturas(id_factura)
+    FOREIGN KEY (id_factura) REFERENCES facturas(id_factura) ON DELETE CASCADE
 );
 
 CREATE TABLE pagos(
@@ -103,7 +103,7 @@ CREATE TABLE pagos(
     monto DECIMAL(10,2),
     id_factura INT,
     id_metodo INT,
-    FOREIGN KEY (id_factura) REFERENCES facturas(id_factura),
+    FOREIGN KEY (id_factura) REFERENCES facturas(id_factura) ON DELETE RESTRICT,
     FOREIGN KEY (id_metodo) REFERENCES metodo_pago(id_metodo)
 );
 CREATE TABLE documentos(
@@ -113,8 +113,8 @@ CREATE TABLE documentos(
     ruta_archivo VARCHAR(255) NOT NULL, -- ¡Importante para saber dónde está el PDF!
     id_usuario INT NULL, -- Será nulo si el documento es de un trabajador
     id_trabajador INT NULL, -- Será nulo si el documento es de un instructor/admin
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
+	FOREIGN KEY (id_usuario)    REFERENCES usuarios(id_usuario)       ON DELETE SET NULL,
+	FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE SET NULL
 );
 CREATE TABLE salud(
     id_salud INT PRIMARY KEY AUTO_INCREMENT,
@@ -124,7 +124,7 @@ CREATE TABLE salud(
     fecha_examen DATE,
     fecha_vencimiento DATE,
     id_trabajador INT,
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
+    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE RESTRICT
 );
 CREATE TABLE disponibilidad(
     id_disponibilidad INT PRIMARY KEY AUTO_INCREMENT,
@@ -151,7 +151,7 @@ CREATE TABLE respuestas(
     respuesta TEXT,
     es_correcta BOOLEAN,
     id_pregunta INT,
-    FOREIGN KEY (id_pregunta) REFERENCES preguntas(id_pregunta)
+    FOREIGN KEY (id_pregunta) REFERENCES preguntas(id_pregunta) ON DELETE CASCADE
 );
 
 CREATE TABLE evaluaciones_presentadas(
@@ -181,7 +181,7 @@ CREATE TABLE accidentes(
     id_trabajador INT,
     id_tipo_accidente INT,
     descripcion TEXT,
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador),
+    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE RESTRICT,
     FOREIGN KEY (id_tipo_accidente) REFERENCES tipos_accidente(id_tipo_accidente)
 );
 CREATE TABLE tipos_alerta(
@@ -195,7 +195,7 @@ CREATE TABLE alertas(
     fecha_vencimiento DATE,
     estado ENUM('pendiente','enviada','vencida'),
     id_usuario INT,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL,
     FOREIGN KEY (id_tipo_alerta) REFERENCES tipos_alerta(id_tipo_alerta)
 );
 CREATE TABLE programacion_cursos(
@@ -214,13 +214,13 @@ CREATE TABLE inscripciones(
     id_trabajador INT,
     estado ENUM('inscrito','cancelado'),
     FOREIGN KEY (id_programacion) REFERENCES programacion_cursos(id_programacion),
-    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador)
+    FOREIGN KEY (id_trabajador) REFERENCES trabajadores(id_trabajador) ON DELETE CASCADE
 );
 CREATE TABLE asistencias(
     id_asistencia INT PRIMARY KEY AUTO_INCREMENT,
     id_inscripcion INT,
     asistio BOOLEAN,
-    FOREIGN KEY (id_inscripcion) REFERENCES inscripciones(id_inscripcion)
+    FOREIGN KEY (id_inscripcion) REFERENCES inscripciones(id_inscripcion) ON DELETE CASCADE
 );
 
 CREATE TABLE certificados_equipos(
