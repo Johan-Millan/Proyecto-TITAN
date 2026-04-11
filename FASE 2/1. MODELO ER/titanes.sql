@@ -565,3 +565,25 @@ INSERT INTO certificados_equipos (id_indumentaria, fecha_emision, fecha_vencimie
 (8, '2025-02-05', '2026-02-05', 'apto'),
 (9, '2025-02-10', '2026-02-10', 'apto'),
 (10, '2025-02-15', '2026-02-15', 'no_apto');
+
+-- Certificados emitidos en 2025
+SELECT codigo, fecha_emision
+FROM certificados
+WHERE fecha_emision BETWEEN '2025-01-01' AND '2025-12-31';
+
+-- Certificados que vencen entre el 1 de marzo y el 30 de marzo de 2026
+SELECT *
+FROM certificados
+WHERE fecha_vencimiento BETWEEN '2026-03-01' AND '2026-03-30';
+
+-- Accidentes en febrero 2025
+SELECT lugar, fecha
+FROM accidentes
+WHERE fecha BETWEEN '2025-02-01' AND '2025-02-28';
+
+-- Evaluaciones presentadas en marzo
+SELECT *
+FROM evaluaciones_presentadas
+WHERE fecha BETWEEN '2025-03-01' AND '2025-03-31';
+
+
