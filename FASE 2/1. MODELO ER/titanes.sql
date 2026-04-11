@@ -586,4 +586,19 @@ SELECT *
 FROM evaluaciones_presentadas
 WHERE fecha BETWEEN '2025-03-01' AND '2025-03-31';
 
+-- Trabajadores de ciertas empresas
+SELECT nombre, id_empresa
+FROM trabajadores
+WHERE id_empresa IN (1, 5, 10);
+
+-- Alertas críticas
+SELECT *
+FROM alertas
+WHERE estado IN ('pendiente', 'vencida');
+
+-- Tipos de accidente peligrosos
+SELECT *
+FROM tipos_accidente
+WHERE nombre IN ('Caída de altura', 'Electrocución');
+
 
