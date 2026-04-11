@@ -1,36 +1,5 @@
 # CONSULTAS, UPDATE Y DELETE
 
-## LIKE — Búsqueda por patrones de texto
-
-```sql
--- Usuarios cuyo nombre empieza por "C"
-SELECT nombre, correo
-FROM usuarios
-WHERE nombre LIKE 'C%';
-
--- Empresas que contienen "SAS"
-SELECT nombre
-FROM empresas
-WHERE nombre LIKE '%SAS%';
-
--- Trabajadores con apellido terminado en "ez"
-SELECT nombre, apellido
-FROM trabajadores
-WHERE apellido LIKE '%ez';
-
--- Cursos que contienen "alturas"
-SELECT nombre_curso
-FROM cursos
-WHERE nombre_curso LIKE '%alturas%';
-
--- Documentos que contienen la palabra "Certificado"
-SELECT nombre
-FROM documentos
-WHERE nombre LIKE '%Certificado%';
-```
-
----
-
 ## BETWEEN — Rangos de fechas y números
 
 ```sql
@@ -38,11 +7,6 @@ WHERE nombre LIKE '%Certificado%';
 SELECT codigo, fecha_emision
 FROM certificados
 WHERE fecha_emision BETWEEN '2025-01-01' AND '2025-12-31';
-
--- Pagos entre 200k y 500k
-SELECT monto, id_factura
-FROM pagos
-WHERE monto BETWEEN 200000 AND 500000;
 
 -- Certificados que vencen entre el 1 de marzo y el 30 de marzo de 2026
 SELECT *
@@ -65,11 +29,6 @@ WHERE fecha BETWEEN '2025-03-01' AND '2025-03-31';
 ## IN — Lista de valores específicos
 
 ```sql
--- Usuarios con roles importantes
-SELECT nombre, id_rol
-FROM usuarios
-WHERE id_rol IN (1, 2, 3);
-
 -- Trabajadores de ciertas empresas
 SELECT nombre, id_empresa
 FROM trabajadores
@@ -79,11 +38,6 @@ WHERE id_empresa IN (1, 5, 10);
 SELECT *
 FROM alertas
 WHERE estado IN ('pendiente', 'vencida');
-
--- Métodos de pago digitales
-SELECT *
-FROM metodo_pago
-WHERE nombre IN ('Nequi', 'Daviplata', 'PSE');
 
 -- Tipos de accidente peligrosos
 SELECT *
@@ -121,13 +75,6 @@ WHERE correo IS NULL;
 
 ## Combinaciones — Lo que piden en parciales
 
-### LIKE + IN
-```sql
-SELECT nombre, id_rol
-FROM usuarios
-WHERE nombre LIKE 'C%'
-AND id_rol IN (1, 2);
-```
 
 ### BETWEEN + IN
 ```sql
@@ -145,12 +92,6 @@ WHERE codigo LIKE 'CERT%'
 AND fecha_emision BETWEEN '2025-01-01' AND '2025-06-30';
 ```
 
-### IS NULL + LIKE
-```sql
-SELECT nombre
-FROM documentos
-WHERE id_usuario IS NULL
-AND nombre LIKE '%Certificado%';
  ```
 ### `trabajadores` → `empresas`
 **RESTRICT**
