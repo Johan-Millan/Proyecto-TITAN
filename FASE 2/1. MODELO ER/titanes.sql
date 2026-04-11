@@ -251,15 +251,15 @@ INSERT INTO cursos (nombre_curso, intensidad_horaria) VALUES
 
 INSERT INTO certificados (codigo, fecha_emision, fecha_vencimiento, id_trabajador, id_curso, id_empresa) VALUES
 ('CERT-001', '2025-01-15', '2026-01-15', 1, 1, 1),
-('CERT-002', '2025-02-10', '2026-02-10', 2, 2, 2),
-('CERT-003', '2025-03-05', '2026-03-05', 3, 3, 3),
-('CERT-004', '2025-01-20', '2026-01-20', 4, 3, 4),
-('CERT-005', '2025-02-25', '2026-02-25', 5, 1, 5),
-('CERT-006', '2025-03-12', '2026-03-12', 6, 2, 6),
+('ART-002', '2025-02-10', '2026-02-10', 2, 2, 2),
+('TAN-003', '2025-03-05', '2026-03-05', 3, 3, 3),
+('TAN-004', '2025-01-20', '2026-01-20', 4, 3, 4),
+('ART-005', '2025-02-25', '2026-02-25', 5, 1, 5),
+('ART-006', '2025-03-12', '2026-03-12', 6, 2, 6),
 ('CERT-007', '2025-01-30', '2026-01-30', 7, 3, 7),
-('CERT-008', '2025-02-18', '2026-02-18', 8, 1, 8),
+('TAN-008', '2025-02-18', '2026-02-18', 8, 1, 8),
 ('CERT-009', '2025-03-22', '2026-03-22', 9, 1, 9),
-('CERT-010', '2025-04-01', '2026-04-01', 10, 2, 10);
+('ART-010', '2025-04-01', '2026-04-01', 10, 2, 10);
 
 INSERT INTO indumentaria (nombre, descripcion) VALUES
 ('Casco de seguridad', 'Protección para la cabeza contra impactos y caídas de objetos'),
@@ -566,39 +566,78 @@ INSERT INTO certificados_equipos (id_indumentaria, fecha_emision, fecha_vencimie
 (9, '2025-02-10', '2026-02-10', 'apto'),
 (10, '2025-02-15', '2026-02-15', 'no_apto');
 
--- Certificados emitidos en 2025
+
 SELECT codigo, fecha_emision
 FROM certificados
 WHERE fecha_emision BETWEEN '2025-01-01' AND '2025-12-31';
 
--- Certificados que vencen entre el 1 de marzo y el 30 de marzo de 2026
 SELECT *
 FROM certificados
 WHERE fecha_vencimiento BETWEEN '2026-03-01' AND '2026-03-30';
 
--- Accidentes en febrero 2025
+
 SELECT lugar, fecha
 FROM accidentes
 WHERE fecha BETWEEN '2025-02-01' AND '2025-02-28';
 
--- Evaluaciones presentadas en marzo
 SELECT *
 FROM evaluaciones_presentadas
 WHERE fecha BETWEEN '2025-03-01' AND '2025-03-31';
 
--- Trabajadores de ciertas empresas
-SELECT nombre, id_empresa
-FROM trabajadores
-WHERE id_empresa IN (1, 5, 10);
-
--- Alertas críticas
 SELECT *
 FROM alertas
 WHERE estado IN ('pendiente', 'vencida');
 
--- Tipos de accidente peligrosos
 SELECT *
 FROM tipos_accidente
 WHERE nombre IN ('Caída de altura', 'Electrocución');
 
+SELECT lugar, fecha
+FROM accidentes
+WHERE fecha BETWEEN '2025-02-01' AND '2025-02-28';
 
+SELECT nombre, ruta_archivo
+FROM documentos
+WHERE nombre LIKE '%Hoja de vida%';
+
+SELECT *
+FROM salud
+WHERE apto IN ('NO');
+
+SELECT *
+FROM certificados_equipos
+WHERE estado IN ('no_apto');
+
+SELECT *
+FROM programacion_cursos
+WHERE fecha BETWEEN '2025-04-10' AND '2025-04-15';
+
+SELECT *
+FROM facturas
+WHERE fecha BETWEEN '2025-03-01' AND '2025-03-05';
+
+SELECT *
+FROM usuarios
+WHERE id_empresa IS NULL;
+
+SELECT *
+FROM preguntas
+WHERE pregunta LIKE '%seguridad%';
+
+SELECT *
+FROM certificados
+WHERE codigo LIKE 'CERT%'
+AND fecha_emision BETWEEN '2025-01-01' AND '2025-04-01';
+
+SELECT *
+FROM pagos
+WHERE monto BETWEEN 300000 AND 800000
+AND id_metodo IN (5,6,7);
+
+SELECT *
+FROM resultados
+WHERE puntaje BETWEEN 0 AND 69;
+
+SELECT *
+FROM programacion_cursos
+WHERE cupos BETWEEN 1 AND 15;
