@@ -293,28 +293,21 @@ INSERT INTO usuarios (nombre, correo, telefono, id_rol, id_tipo, numero_identifi
 ('Natalia Vargas', 'natalia.vargas@gmail.com', 3090123456, 9, 2, 1101234567, 'hash123', FALSE, 10);
 
 INSERT INTO cursos (nombre_curso, intensidad_horaria) VALUES
-('Trabajo seguro en alturas - Nivel básico', 40),
-('Trabajo seguro en alturas - Nivel avanzado', 60),
-('Reentrenamiento en alturas', 20),
-('Coordinador de trabajo en alturas', 80),
-('Rescate en alturas', 50),
-('Espacios confinados', 40),
-('Primeros auxilios', 30),
-('Manejo de extintores', 16),
-('Seguridad industrial básica', 24),
-('Riesgo eléctrico', 32);
+('Trabajador autorizado', 32),
+('Reentrenamiento en alturas', 8),
+('Coordinador de trabajo en alturas', 80);
 
 INSERT INTO certificados (codigo, fecha_emision, fecha_vencimiento, id_trabajador, id_curso, id_empresa) VALUES
 ('CERT-001', '2025-01-15', '2026-01-15', 1, 1, 1),
 ('CERT-002', '2025-02-10', '2026-02-10', 2, 2, 2),
 ('CERT-003', '2025-03-05', '2026-03-05', 3, 3, 3),
-('CERT-004', '2025-01-20', '2026-01-20', 4, 4, 4),
-('CERT-005', '2025-02-25', '2026-02-25', 5, 5, 5),
-('CERT-006', '2025-03-12', '2026-03-12', 6, 6, 6),
-('CERT-007', '2025-01-30', '2026-01-30', 7, 7, 7),
-('CERT-008', '2025-02-18', '2026-02-18', 8, 8, 8),
-('CERT-009', '2025-03-22', '2026-03-22', 9, 9, 9),
-('CERT-010', '2025-04-01', '2026-04-01', 10, 10, 10);
+('CERT-004', '2025-01-20', '2026-01-20', 4, 3, 4),
+('CERT-005', '2025-02-25', '2026-02-25', 5, 1, 5),
+('CERT-006', '2025-03-12', '2026-03-12', 6, 2, 6),
+('CERT-007', '2025-01-30', '2026-01-30', 7, 3, 7),
+('CERT-008', '2025-02-18', '2026-02-18', 8, 1, 8),
+('CERT-009', '2025-03-22', '2026-03-22', 9, 1, 9),
+('CERT-010', '2025-04-01', '2026-04-01', 10, 2, 10);
 
 INSERT INTO indumentaria (nombre, descripcion) VALUES
 ('Casco de seguridad', 'Protección para la cabeza contra impactos y caídas de objetos'),
