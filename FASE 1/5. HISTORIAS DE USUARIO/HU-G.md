@@ -1,3 +1,4 @@
+# Seguridad Operacional
 HU-G01
 Registro de equipos de seguridad
 CampoValorIDHU-G01ÉpicaSeguridad OperacionalRF cubiertoRF-003.5PrioridadAltaVersión1.0
