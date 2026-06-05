@@ -1,128 +1,40 @@
-### HU-D – Autoconsulta e impresión de certificados por participantes
+HU-D01
+Consulta de certificados por participante
+CampoValorIDHU-D01ÉpicaServicios al ParticipanteRF cubiertoRF-002.4PrioridadAltaVersión1.0
+Historia de usuario
 
-Requisito cubierto: RF-002.4
+Yo como participante quiero consultar mis certificados ingresando mi número de documento para verificar cuáles tengo disponibles.
 
-==========================================
-## 🔹 Metadatos
+Criterios de aceptación
 
-ID: HU-D
+CA-01: El sistema valida que el documento ingresado exista en el sistema.
+CA-02: El sistema muestra la lista de certificados asociados al participante.
+CA-03: Los certificados vencidos aparecen marcados como "Expirado".
+CA-04: Si no hay certificados, muestra mensaje informativo.
 
-Epic: Servicios al Participante
+Tareas técnicas
+CapaTareaBackendCrear endpoint GET /api/certificados?documento=XBackendValidar existencia del documentoBackendFiltrar y retornar certificados con estado vigente/expiradoBase de datosAgregar columna fecha_vencimiento en tabla certificadoFrontendCampo de ingreso de documentoFrontendBotón ConsultarFrontendLista de tarjetas de certificados con estadoFrontendMensaje si no hay resultadosQACP-D01: Consultar con documento válido y con certificadosQACP-D02: Consultar con documento válido sin certificadosQACP-D03: Consultar con documento inexistente
+Notas técnicas
 
-Prioridad: Alta
+El participante solo puede ver sus propios certificados (validar por documento).
+Interfaz responsiva para acceso desde móvil.
 
-Versión: 1.0
----
-## 🔹 Historia de abducción
+HU-D02
+Descarga de certificado en PDF
+CampoValorIDHU-D02ÉpicaServicios al ParticipanteRF cubiertoRF-002.4PrioridadAltaVersión1.0
+Historia de usuario
 
-Como participante, quiero consultar e imprimir mi certificado de alturas, para tener acceso inmediato a mi comprobante sin depender del personal administrativo.
+Yo como participante quiero descargar mi certificado en PDF para tenerlo disponible o presentarlo donde se requiera.
 
-## 🔹 Descripción detallada
+Criterios de aceptación
 
-El sistema debe permitir:
+CA-01: El sistema permite descargar solo certificados vigentes.
+CA-02: El archivo descargado es un PDF válido con los datos del participante.
+CA-03: Los certificados expirados no son descargables.
 
-Ingreso del documento o autenticación.
+Tareas técnicas
+CapaTareaBackendCrear endpoint GET /api/certificados/:id/pdfBackendValidar que el certificado pertenece al participante solicitanteBackendServir archivo PDF desde almacenamientoBase de datosVerificar ruta de almacenamiento del PDF en tabla certificadoFrontendBotón "Descargar PDF" en cada tarjeta de certificado vigenteFrontendDeshabilitar botón para certificados expiradosFrontendIndicador de carga durante la descargaQACP-D04: Descargar certificado vigenteQACP-D05: Verificar que certificado expirado no tiene opción de descarga
+Notas técnicas
 
-Validar identidad del participante.
+Renderizado PDF en backend. Considerar caché para PDFs ya generados.
 
-Mostrar la lista de certificados disponibles.
-
-Permitir descarga en PDF.
-
-Permitir impresión directa.
-
-## 🔹 Criterios de aceptación
-
-CA-01: Validar identidad correctamente.
-
-CA-02: Mostrar certificados asociados al participante.
-
-CA-03: Permitir descarga en PDF.
-
-CA-04: Permitir impresión desde el navegador.
-
-Escenarios (Gherkin)
-## ✔ Escenario 1 – Happy Path: Certificado descargado con éxito
-
-Dado que el participante ingresa su documento
-Cuando el sistema valida su identidad
-Entonces muestra sus certificados disponibles
-Y permite descargarlos en PDF.
-
-## ✔ Escenario 2 – Flujo alternativo: No tiene certificados aún
-
-Dado que el participante consulta
-Cuando no tiene certificados generados
-Entonces el sistema muestra “Aún no tienes certificados disponibles”.
-
-## ✔ Escenario 3 – Manejo de errores: Documento inválido
-
-Dado que el participante ingresa un documento no válido
-Cuando intenta consultar
-Entonces el sistema muestra el mensaje “Documento no encontrado”.
-
-## Reglas de negocio
-
-RN-01: Solo certificados vigentes son descargables.
-
-RN-02: Certificados vencidos deben aparecer marcados como “Expirado”.
-
-RN-03: El participante solo puede ver sus propios certificados.
-
-## Definición de Terminado (DoD)
-
-Validación de identidad implementada.
-
-PDF descargable.
-
-Módulo probado y aprobado.
-
-Manual de usuario actualizado.
-
-Seguridad validada.
-
-## Notas Técnicas
-
-Verificación de identidad basada en documento + fecha de nacimiento (opcional).
-
-Renderizado PDF en backend.
-
-Frontend responsivo.
-
-## Wireframe (descriptivo)
-
-Pantalla “Mis Certificados”:
-
-Campo para ingresar documento.
-
-Botón “Consultar”.
-
-Lista con tarjetas de certificados.
-
-Botón “Descargar PDF”.
-
-## Tareas Técnicas
-
-Endpoint para consulta de certificados.
-
-Validar identidad.
-
-Generar interfaz de listado.
-
-Implementar descarga PDF.
-
-Mensajes de error con UX clara.
-
-## Casos de Prueba
-
-CP-D01: Consultar certificado existente.
-
-CP-D02: Intentar consulta con documento inválido.
-
-CP-D03: Descargar certificado.
-
-CP-D04: Participante sin certificados.
-
-## Validación INVEST
-
-Cumple completamente.
