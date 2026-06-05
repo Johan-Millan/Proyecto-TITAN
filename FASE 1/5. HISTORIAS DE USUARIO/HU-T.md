@@ -1,4 +1,4 @@
-#Transversal
+# Transversal
 
 HU-T01
 Componente de mensajes de confirmación y error
