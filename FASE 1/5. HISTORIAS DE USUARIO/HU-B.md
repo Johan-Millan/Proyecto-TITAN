@@ -1,22 +1,31 @@
-Seguridad y Control
+# Seguridad y Control
 
-HU-B01
+## HU-B01
 Registro de incidentes
 CampoValorIDHU-B01ÉpicaSeguridad y ControlRF cubiertoRF-001.4PrioridadAltaVersión1.0
 Historia de usuario
 
 Yo como personal administrativo quiero registrar un incidente ocurrido en el centro para mantener un control formal y rastreable del evento.
 
-Criterios de aceptación
+## Criterios de aceptación
 
-CA-01: El sistema permite ingresar fecha, descripción, responsable y nivel de gravedad.
-CA-02: El sistema asigna estado inicial "Abierto" al crear el incidente.
-CA-03: El sistema guarda el registro y muestra confirmación.
+- **CA-01:** El sistema permite ingresar fecha, descripción, responsable y nivel de gravedad.
+- **CA-02:** El sistema asigna estado inicial "Abierto" al crear el incidente.
+- **CA-03:** El sistema guarda el registro y muestra confirmación.
 
-Tareas técnicas
-CapaTareaBackendCrear endpoint POST /api/incidentesBackendAsignar estado inicial automáticamenteBackendValidar campos obligatoriosBase de datosCrear tabla incidente: id, fecha, descripcion, gravedad, estado, responsable, usuario_registroFrontendFormulario de registro de incidenteFrontendSelector de gravedad y responsableFrontendMensaje de confirmaciónQACP-B01: Registrar incidente con todos los datosQACP-B02: Intentar guardar sin campos obligatorios
-Notas técnicas
+## Tareas técnicas
+| Capa | Tarea |
+|------|-------|
+| Backend | Crear endpoint POST /api/incidentes |
+| Backend | Asignar estado inicial automáticamente |
+| Backend | Validar campos obligatorios |
+| Base de datos | Crear tabla incidente: id, fecha, descripcion, gravedad, estado, responsable, usuario_registroFrontendFormulario de registro de incidente |
+| Frontend | Selector de gravedad y responsable |
+| Frontend | Mensaje de confirmación |
+| QA | CP-B01: Registrar incidente con todos los datos |
+| QA | CP-B02: Intentar guardar sin campos obligatorios |
 
+## Notas técnicas
 Incidentes de gravedad alta deben generar notificación (ver HU-T01).
 
 HU-B02
