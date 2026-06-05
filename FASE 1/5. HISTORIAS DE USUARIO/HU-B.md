@@ -1,136 +1,60 @@
-### HU-B – Registro y Gestión de Incidentes
+Seguridad y Control
 
-Requisito cubierto: RF-001.4
+HU-B01
+Registro de incidentes
+CampoValorIDHU-B01ÉpicaSeguridad y ControlRF cubiertoRF-001.4PrioridadAltaVersión1.0
+Historia de usuario
 
-==========================================
-## 🔹 Metadatos
+Yo como personal administrativo quiero registrar un incidente ocurrido en el centro para mantener un control formal y rastreable del evento.
 
-ID: HU-B
+Criterios de aceptación
 
-Epic: Seguridad y Control
+CA-01: El sistema permite ingresar fecha, descripción, responsable y nivel de gravedad.
+CA-02: El sistema asigna estado inicial "Abierto" al crear el incidente.
+CA-03: El sistema guarda el registro y muestra confirmación.
 
-Prioridad: Alta
+Tareas técnicas
+CapaTareaBackendCrear endpoint POST /api/incidentesBackendAsignar estado inicial automáticamenteBackendValidar campos obligatoriosBase de datosCrear tabla incidente: id, fecha, descripcion, gravedad, estado, responsable, usuario_registroFrontendFormulario de registro de incidenteFrontendSelector de gravedad y responsableFrontendMensaje de confirmaciónQACP-B01: Registrar incidente con todos los datosQACP-B02: Intentar guardar sin campos obligatorios
+Notas técnicas
 
-Versión: 1.0
----
-## 🔹 Historia de abducción
+Incidentes de gravedad alta deben generar notificación (ver HU-T01).
 
-Como personal administrativo, quiero registrar y gestionar incidentes ocurridos en el centro de entrenamiento, para mantener un control formal, ordenado y rastreable de los eventos que afectan la seguridad.
+HU-B02
+Adjuntar evidencia a incidente
+CampoValorIDHU-B02ÉpicaSeguridad y ControlRF cubiertoRF-001.4PrioridadAltaVersión1.0
+Historia de usuario
 
-## 🔹 Descripción detallada
+Yo como personal administrativo quiero adjuntar archivos de evidencia a un incidente registrado para respaldar la información con documentos o imágenes.
 
-El sistema permitirá:
+Criterios de aceptación
 
-Registrar incidente con datos obligatorios (fecha, descripción, responsables, gravedad).
+CA-01: El sistema permite subir imágenes y PDF como evidencia.
+CA-02: El sistema rechaza formatos o tamaños no permitidos con mensaje de error.
+CA-03: La evidencia queda asociada al incidente y puede consultarse después.
 
-Adjuntar evidencia (imágenes, PDFs).
+Tareas técnicas
+CapaTareaBackendCrear endpoint POST /api/incidentes/:id/evidenciaBackendValidar tipo y tamaño de archivoBackendAlmacenar archivo de forma seguraBase de datosCrear tabla evidencia: id, id_incidente, ruta_archivo, tipo, fecha_subidaFrontendComponente de carga de archivos (drag & drop)FrontendValidación de tipo y tamaño en clienteFrontendMostrar listado de evidencias adjuntasQACP-B03: Subir PDF válido como evidenciaQACP-B04: Intentar subir archivo con formato no permitido
+Notas técnicas
 
-Editar detalles del incidente.
+Tamaño máximo recomendado: 5 MB por archivo.
+Validación antivirus en backend si el entorno lo permite.
 
-Cambiar estado (abierto / en seguimiento / cerrado).
+HU-B03
+Cambio de estado de incidente
+CampoValorIDHU-B03ÉpicaSeguridad y ControlRF cubiertoRF-001.4PrioridadAltaVersión1.0
+Historia de usuario
 
-Consultar historial completo del incidente para auditoría.
+Yo como personal administrativo quiero cambiar el estado de un incidente para reflejar su avance dentro del proceso de seguimiento.
 
-## 🔹 Criterios de aceptación
+Criterios de aceptación
 
-CA-01: Debe registrar incidentes con campos obligatorios.
+CA-01: El sistema permite cambiar el estado entre: Abierto, En seguimiento, Cerrado.
+CA-02: Solo usuarios autorizados pueden cerrar un incidente.
+CA-03: El sistema registra cada cambio de estado con fecha y usuario.
 
-CA-02: Permitir adjuntar archivos como evidencia.
+Tareas técnicas
+CapaTareaBackendCrear endpoint PATCH /api/incidentes/:id/estadoBackendValidar permisos según rol para cierreBackendRegistrar cambio en log de auditoríaBase de datosCrear tabla historial_incidente: id, id_incidente, estado_anterior, estado_nuevo, usuario, fechaFrontendSelector de estado en vista de detalle del incidenteFrontendConfirmación antes de cerrarFrontendMostrar historial de estadosQACP-B05: Cambiar estado a En seguimientoQACP-B06: Intentar cerrar incidente sin permisos
+Notas técnicas
 
-CA-03: Permitir editar y actualizar datos del incidente.
+Flujo de estados permitido: Abierto → En seguimiento → Cerrado únicamente.
 
-CA-04: Mantener historial de cambios y estados.
-
-CA-05: Permitir búsqueda y filtrado por tipo, fecha, gravedad y estado.
-
-Escenarios (Gherkin)
-## ✔ Escenario 1 – Happy Path: Registro exitoso de incidente
-
-Dado que el administrativo está en el formulario de incidentes
-Cuando ingresa todos los datos obligatorios y guarda
-Entonces el sistema registra el incidente
-Y muestra el mensaje “Incidente registrado exitosamente”.
-
-## ✔ Escenario 2 – Flujo alternativo: Registro sin evidencia
-
-Dado que el administrativo registra un incidente
-Cuando no adjunta ninguna evidencia
-Entonces el sistema registra igualmente el incidente
-Y permite adjuntar evidencia más adelante.
-
-## ✔ Escenario 3 – Manejo de errores: Archivo de evidencia no válido
-
-Dado que el usuario intenta subir un archivo corrupto o no permitido
-Cuando adjunta la evidencia
-Entonces el sistema rechaza el archivo
-Y muestra el mensaje “Formato o tamaño de archivo no permitido”.
-
-## Reglas de negocio
-
-RN-01: Todo incidente debe tener un estado.
-
-RN-02: Solo usuarios autorizados pueden cerrar incidentes.
-
-RN-03: Debe existir trazabilidad completa del incidente.
-
-RN-04: Los incidentes de gravedad alta generan notificación inmediata.
-
-## Definición de Terminado (DoD)
-
-Flujo completo implementado (crear/ver/editar/cerrar).
-
-Pruebas unitarias > 80%.
-
-Carga de archivos validada.
-
-Documentación actualizada.
-
-Revisión de UX aprobada.
-
-Seguridad revisada y validada.
-
-## Notas Técnicas
-
-Manejo de archivos con almacenamiento seguro.
-
-Validación antivirus al subir archivos.
-
-Logs de auditoría.
-
-API RESTful para gestión de incidentes.
-
-## Wireframe (descriptivo)
-
-Pantalla “Incidentes”:
-
-Botón “Registrar Incidente”.
-
-Tabla filtrable: fecha, gravedad, responsable, estado.
-
-Detalle del incidente con pestaña “Evidencia”.
-
-## Tareas Técnicas
-
-Crear modelo de datos (incidente + evidencia).
-
-Endpoints REST (POST, GET, PUT).
-
-Componente de carga de archivos.
-
-Vista de tabla + filtros.
-
-Control de permisos según rol.
-
-## Casos de Prueba
-
-CP-B01: Registrar incidente con todos los datos.
-
-CP-B02: Registrar incidente sin evidencia.
-
-CP-B03: Subir archivo no permitido (error).
-
-CP-B04: Cambiar estado del incidente.
-
-## Validación INVEST
-
-Cumple con todos los criterios: Independiente, negociable, valiosa, estimable, pequeña y testeable.
