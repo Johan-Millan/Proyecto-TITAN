@@ -1,136 +1,75 @@
-### HU-C – Reportes operativos, cierre de mes, certificaciones y auditorías
+HU-C01
+Generación de reporte diario
+CampoValorIDHU-C01ÉpicaReportes y CumplimientoRF cubiertoRF-002.1PrioridadAltaVersión1.0
+Historia de usuario
 
-Requisitos cubiertos: RF-002.1, RF-002.2, RF-002.3
+Yo como personal administrativo quiero generar un informe diario al cierre de jornada para tener un resumen de las actividades del día.
 
-==========================================
-## 🔹 Metadatos
+Criterios de aceptación
 
-ID: HU-C
+CA-01: El sistema genera el reporte con datos del día en curso.
+CA-02: El reporte queda almacenado en el repositorio de informes.
+CA-03: El reporte no puede modificarse manualmente una vez generado.
 
-Epic: Reportes y Cumplimiento
+Tareas técnicas
+CapaTareaBackendCrear endpoint POST /api/reportes/diarioBackendImplementar CronJob para ejecución automática al cierre de jornadaBackendBloquear edición del reporte tras generarseBase de datosCrear tabla reporte: id, tipo, fecha, contenido_json, generado_por, fecha_creacionFrontendBotón "Generar reporte diario" en panel de reportesFrontendLista cronológica de reportes generadosQACP-C01: Generar reporte diario manualmenteQACP-C02: Verificar que el reporte queda bloqueado para edición
+Notas técnicas
+CronJob en horario configurable. Evaluar uso de node-cron o equivalente según stack.
 
-Prioridad: Alta
+HU-C02
+Consolidación de cierre mensual
+CampoValorIDHU-C02ÉpicaReportes y CumplimientoRF cubiertoRF-002.2PrioridadAltaVersión1.0
+Historia de usuario
 
-Versión: 1.0
----
-## 🔹 Historia de abducción
+Yo como personal administrativo quiero ejecutar el cierre de mes para consolidar automáticamente la información de participantes aprobados en el período.
 
-Como personal administrativo, quiero generar reportes diarios, consolidar el cierre de mes y generar certificados de manera automática, para agilizar procesos operativos y cumplir auditorías con información organizada y verificable.
+Criterios de aceptación
 
-## 🔹 Descripción detallada
+CA-01: El sistema consolida todos los participantes aprobados del mes.
+CA-02: El proceso omite participantes con datos incompletos y notifica cuáles fueron omitidos.
+CA-03: El consolidado queda archivado en el repositorio mensual.
 
-El sistema debe:
+Tareas técnicas
+CapaTareaBackendCrear endpoint POST /api/reportes/cierre-mesBackendLógica de consolidación: filtrar aprobados con datos completosBackendGenerar registro del consolidado mensualBase de datosCrear tabla consolidado_mensual con referencia a participantes incluidosFrontendBotón "Ejecutar cierre de mes"FrontendResultado con lista de incluidos y excluidosFrontendConfirmación antes de ejecutar (usar HU-T02)QACP-C03: Ejecutar cierre con participantes completos e incompletosQACP-C04: Verificar que incompletos aparecen en lista de omitidos
+Notas técnicas
 
-Generar reportes diarios al cierre de jornada.
+La BD debe estar optimizada para consultas masivas en el cierre mensual.
 
-Automatizar consolidación mensual de aprobados.
+HU-C02
+Consolidación de cierre mensual
+CampoValorIDHU-C02ÉpicaReportes y CumplimientoRF cubiertoRF-002.2PrioridadAltaVersión1.0
+Historia de usuario
 
-Generar certificados automáticamente.
+Yo como personal administrativo quiero ejecutar el cierre de mes para consolidar automáticamente la información de participantes aprobados en el período.
 
-Organizar toda la documentación en un repositorio digital consultable.
+Criterios de aceptación
 
-Permitir exportar reportes bajo demanda.
+CA-01: El sistema consolida todos los participantes aprobados del mes.
+CA-02: El proceso omite participantes con datos incompletos y notifica cuáles fueron omitidos.
+CA-03: El consolidado queda archivado en el repositorio mensual.
 
-## 🔹 Criterios de aceptación
+Tareas técnicas
+CapaTareaBackendCrear endpoint POST /api/reportes/cierre-mesBackendLógica de consolidación: filtrar aprobados con datos completosBackendGenerar registro del consolidado mensualBase de datosCrear tabla consolidado_mensual con referencia a participantes incluidosFrontendBotón "Ejecutar cierre de mes"FrontendResultado con lista de incluidos y excluidosFrontendConfirmación antes de ejecutar (usar HU-T02)QACP-C03: Ejecutar cierre con participantes completos e incompletosQACP-C04: Verificar que incompletos aparecen en lista de omitidos
+Notas técnicas
 
-CA-01: Generar reporte diario automático.
+La BD debe estar optimizada para consultas masivas en el cierre mensual.
 
-CA-02: Consolidar información mensual.
+HU-C03
+Generación automática de certificados
+CampoValorIDHU-C03ÉpicaReportes y CumplimientoRF cubiertoRF-002.3PrioridadAltaVersión1.0
+Historia de usuario
 
-CA-03: Generar certificados PDF para los aprobados.
+Yo como personal administrativo quiero que el sistema genere certificados PDF automáticamente al ejecutar el cierre de mes para los participantes aprobados.
 
-CA-04: Registrar todos los reportes en un repositorio.
+Criterios de aceptación
 
-CA-05: Permitir Consulta con filtros por auditorías.
+CA-01: El sistema genera un certificado PDF por cada participante aprobado con datos completos.
+CA-02: Cada certificado tiene un número único e irrepetible.
+CA-03: El sistema no genera certificado para participantes con datos incompletos y muestra un aviso.
 
-## Escenarios (Gherkin)
-✔ Escenario 1 – Happy Path: Cierre exitoso de mes
+Tareas técnicas
+CapaTareaBackendCrear servicio de generación PDF (ej. PDFKit, Puppeteer)BackendAsignar numeración única a cada certificadoBackendArchivar PDF generado y registrar en BDBase de datosAgregar columna numero_certificado con restricción UNIQUE en tabla certificadoFrontendVista de certificados generados con opción de descargaFrontendAviso de participantes omitidos con motivoQACP-C05: Verificar generación de PDF con datos completosQACP-C06: Verificar que participante con datos incompletos no recibe certificado
+Notas técnicas
 
-Dado que es fin de mes
-Cuando el administrativo ejecuta el cierre
-Entonces el sistema consolida los datos de los participantes aprobados
-Y genera certificados automáticamente
-Y los archiva en el repositorio mensual.
-
-## ✔ Escenario 2 – Flujo alternativo: Generar reporte bajo demanda
-
-Dado que el administrativo necesita un reporte fuera de horario
-Cuando solicita “Generar reporte ahora”
-Entonces el sistema calcula y entrega el reporte actualizado.
-
-## ✔ Escenario 3 – Manejo de errores: Datos incompletos
-
-Dado que falta información crítica en un participante
-Cuando el sistema intenta generar su certificado
-Entonces muestra el error “Falta información obligatoria para generar el certificado”
-Y omite solo ese caso, sin detener el proceso general.
-
-## Reglas de negocio
-
-RN-01: Solo participantes que aprobaron y tienen datos completos pueden recibir certificado.
-
-RN-02: Todo reporte debe quedar registrado para auditoría.
-
-RN-03: Reportes no pueden ser modificados manualmente.
-
-RN-04: Certificados deben tener numeración única.
-
-## Definición de Terminado (DoD)
-
-Cierre de mes funcional.
-
-Certificados PDF generados correctamente.
-
-Reportes exportables (PDF, Excel).
-
-Auditoría activada.
-
-Validado por usuarios.
-
-Código y documentación finalizados.
-
-## Notas Técnicas
-
-Generación PDF automática.
-
-CronJobs para tareas diarias/mensuales.
-
-DB optimizada para consultas masivas.
-
-Control de versiones de reportes.
-
-## Wireframe (descriptivo)
-
-Pantalla “Reportes”:
-
-Botón: “Generar reporte diario”.
-
-Botón: “Ejecutar cierre de mes”.
-
-Lista cronológica de reportes generados.
-
-## Tareas Técnicas
-
-Crear módulo de reportes.
-
-Implementar lógica del cierre mensual.
-
-Generar PDF de certificados.
-
-Repositorio digital versionado.
-
-API para consultas de auditoría.
-
-## Casos de Prueba
-
-CP-C01: Generar reporte diario automático.
-
-CP-C02: Ejecutar cierre mensual.
-
-CP-C03: Caso de certificado no generado por datos incompletos.
-
-CP-C04: Auditor solicita reporte filtrado.
-
-## Validación INVEST
-
-Cumple INVEST completamente.
+Los certificados deben cumplir resolución 4272 del Ministerio de Trabajo.
+Control de versiones de PDF generados recomendado.
