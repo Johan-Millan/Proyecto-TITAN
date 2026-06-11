@@ -21,15 +21,18 @@ De acuerdo con las necesidades del proyecto y las competencias del equipo de des
 
 **Backend (Lógica de Negocio y API):**
 
-- **Lenguaje:** Java.
-- **Framework Principal:** Spring Boot y Spring WebFlux.
+- **Lenguaje:** Python.
+- **Framework Principal:** FastApi.
 
-**Módulos de Spring:**
+**Componentes y Librerías Utilizadas**
+
+- **FastAPI** (Para crear la API REST y gestionar las rutas HTTP de manera rápida y eficiente).
+- **SQLAlchemy** (ORM para mapear las clases de Python a las tablas de MySQL, evitando escribir consultas SQL manuales para los CRUD básicos).
+- **Alembic** (Para la gestión y versionado de migraciones de la base de datos).
+- **Pydantic** (Para la validación, serialización y documentación automática de los datos de entrada y salida de la API).
+- **JWT (JSON Web Tokens)** mediante bibliotecas como **PyJWT** o **python-jose** (Para la autenticación y autorización de usuarios).
+- **Passlib junto con bcrypt** (Para el cifrado seguro de contraseñas).
   
-- Spring Web (Para crear la API REST).
-- Spring Data JPA / Hibernate (Para mapear las clases de Java a las tablas de MySQL mediante ORM, evitando escribir consultas SQL manuales para los CRUD básicos).
-- Spring Security (Para proteger las rutas y encriptar contraseñas).
-
 **Frontend (Interfaz de Usuario):**
 
 - **Lenguajes:** Typescript, React
