@@ -1,0 +1,44 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Login(BaseModel):
+    usuario: string
+    contraseña: string
+
+@app.post("/login")
+def iniciar_sesion(datos: Login):
+
+    if not datos.usuario.strip():
+        raise HTTPException(status_code=400, detail="Usuario obligatorio")
+
+    if not datos.contraseña.strip():
+        raise HTTPException(status_code=400, detail="Contraseña obligatoria")
+
+    if datos.usuario == "enriquevasilescu@gmail.com" and datos.contraseña == "delunoalocho":
+        return {
+            "mensaje": "Has iniciado sesion con exito"
+        }
+
+    raise HTTPException(
+        status_code=401,
+        detail="Usuario o contraseña invalidos"
+    )
+
+from pydantic import BaseModel, Field
+
+class Login(BaseModel):
+    usuario: str = Field(
+        min_length=5,
+        max_length=30
+    )
+    contraseña: str = Field(
+        min_length=8
+    )
+
+from pydantic import BaseModel, EmailStr
+
+class Login(BaseModel):
+    correo: EmailStr
+    contraseña: str
