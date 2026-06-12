@@ -495,16 +495,16 @@ INSERT INTO evaluaciones_presentadas (id_usuario, id_evaluacion, fecha) VALUES
 (10, 2, '2025-03-10');
 
 INSERT INTO resultados (id_presentada, puntaje) VALUES
-(11, 95.00),
-(12, 88.50),
-(13, 70.00),
-(14, 92.00),
-(15, 85.00),
-(16, 60.00),
-(17, 78.00),
-(18, 90.00),
-(19, 82.50),
-(20, 68.00);
+(1, 95.00),
+(2, 88.50),
+(3, 70.00),
+(4, 92.00),
+(5, 85.00),
+(6, 60.00),
+(7, 78.00),
+(8, 90.00),
+(9, 82.50),
+(10, 68.00);
 INSERT INTO alertas (id_tipo_alerta, fecha_vencimiento, estado, id_usuario) VALUES
 (1, '2025-04-15', 'pendiente', 1),
 (2, '2025-04-16', 'enviada', 2),
