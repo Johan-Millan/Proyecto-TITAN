@@ -193,6 +193,9 @@ CREATE TABLE inscripciones(
     id_programacion INT,
     id_usuario INT,
     estado ENUM('inscrito','cancelado'),
+    fecha_inscripcion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    nota_teorica DECIMAL(5,2) NULL,
+    nota_practica DECIMAL(5,2) NULL,
     FOREIGN KEY (id_programacion) REFERENCES programacion_cursos(id_programacion),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
@@ -529,17 +532,17 @@ INSERT INTO programacion_cursos (id_curso, fecha, hora, cupos, id_usuario) VALUE
 (1, '2025-04-18', '10:00:00', 20, 9),
 (2, '2025-04-19', '08:00:00', 25, 10);
 
-INSERT INTO inscripciones (id_programacion, id_usuario, estado) VALUES
-(1, 1, 'inscrito'),
-(2, 2, 'inscrito'),
-(3, 3, 'cancelado'),
-(4, 4, 'inscrito'),
-(5, 5, 'inscrito'),
-(6, 6, 'cancelado'),
-(7, 7, 'inscrito'),
-(8, 8, 'inscrito'),
-(9, 9, 'inscrito'),
-(10, 10, 'cancelado');
+INSERT INTO inscripciones (id_programacion, id_usuario, estado, nota_teorica, nota_practica) VALUES
+(1,  1, 'inscrito',   85.00, 90.00),
+(2,  2, 'inscrito',   70.50, 75.00),
+(3,  3, 'inscrito',   NULL,  NULL),
+(4,  4, 'cancelado',  NULL,  NULL),
+(5,  5, 'inscrito',   95.00, 88.50),
+(6,  1, 'inscrito',   60.00, 65.00),
+(7,  2, 'cancelado',  NULL,  NULL),
+(8,  3, 'inscrito',   80.00, 82.00),
+(9,  4, 'inscrito',   NULL,  NULL),
+(10, 1, 'inscrito',   NULL,  NULL);
 
 INSERT INTO asistencias (id_inscripcion, asistio) VALUES
 (1, TRUE),
