@@ -193,6 +193,9 @@ CREATE TABLE inscripciones(
     id_programacion INT,
     id_usuario INT,
     estado ENUM('inscrito','cancelado'),
+    fecha_inscripcion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    nota_teorica DECIMAL(5,2) NULL,
+    nota_practica DECIMAL(5,2) NULL,
     FOREIGN KEY (id_programacion) REFERENCES programacion_cursos(id_programacion),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
@@ -495,16 +498,16 @@ INSERT INTO evaluaciones_presentadas (id_usuario, id_evaluacion, fecha) VALUES
 (10, 2, '2025-03-10');
 
 INSERT INTO resultados (id_presentada, puntaje) VALUES
-(11, 95.00),
-(12, 88.50),
-(13, 70.00),
-(14, 92.00),
-(15, 85.00),
-(16, 60.00),
-(17, 78.00),
-(18, 90.00),
-(19, 82.50),
-(20, 68.00);
+(1, 95.00),
+(2, 88.50),
+(3, 70.00),
+(4, 92.00),
+(5, 85.00),
+(6, 60.00),
+(7, 78.00),
+(8, 90.00),
+(9, 82.50),
+(10, 68.00);
 INSERT INTO alertas (id_tipo_alerta, fecha_vencimiento, estado, id_usuario) VALUES
 (1, '2025-04-15', 'pendiente', 1),
 (2, '2025-04-16', 'enviada', 2),
@@ -529,17 +532,17 @@ INSERT INTO programacion_cursos (id_curso, fecha, hora, cupos, id_usuario) VALUE
 (1, '2025-04-18', '10:00:00', 20, 9),
 (2, '2025-04-19', '08:00:00', 25, 10);
 
-INSERT INTO inscripciones (id_programacion, id_usuario, estado) VALUES
-(1, 1, 'inscrito'),
-(2, 2, 'inscrito'),
-(3, 3, 'cancelado'),
-(4, 4, 'inscrito'),
-(5, 5, 'inscrito'),
-(6, 6, 'cancelado'),
-(7, 7, 'inscrito'),
-(8, 8, 'inscrito'),
-(9, 9, 'inscrito'),
-(10, 10, 'cancelado');
+INSERT INTO inscripciones (id_programacion, id_usuario, estado, nota_teorica, nota_practica) VALUES
+(1,  1, 'inscrito',   85.00, 90.00),
+(2,  2, 'inscrito',   70.50, 75.00),
+(3,  3, 'inscrito',   NULL,  NULL),
+(4,  4, 'cancelado',  NULL,  NULL),
+(5,  5, 'inscrito',   95.00, 88.50),
+(6,  1, 'inscrito',   60.00, 65.00),
+(7,  2, 'cancelado',  NULL,  NULL),
+(8,  3, 'inscrito',   80.00, 82.00),
+(9,  4, 'inscrito',   NULL,  NULL),
+(10, 1, 'inscrito',   NULL,  NULL);
 
 INSERT INTO asistencias (id_inscripcion, asistio) VALUES
 (1, TRUE),
@@ -636,11 +639,6 @@ AND id_metodo IN (5,6,7);
 SELECT *
 FROM resultados
 WHERE puntaje BETWEEN 0 AND 69;
-
-SELECT *
-FROM programacion_cursos
-WHERE cupos BETWEEN 1 AND 15;
-
 
 SELECT *
 FROM programacion_cursos
