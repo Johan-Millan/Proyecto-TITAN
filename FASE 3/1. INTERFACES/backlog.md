@@ -2,16 +2,16 @@
 
 ## Resumen
 
-| ID | Historia | Prioridad | Estimación |
-|---|---|---|---|
-| HU-E01 | Programación de cursos | Alta | 5 |
-| HU-E02 | Inscripción de participantes a cursos | Alta | 5 |
-| HU-E03 | Validación de requisitos para inscripción | Alta | 8 |
-| HU-F01 | Registro de asistencia | Media | 3 |
-| HU-F02 | Registro de calificaciones | Media | 3 |
-| HU-C03 | Generación automática de certificados | Alta | 8 |
-| HU-D01 | Consulta de certificados por participante | Media | 3 |
-| HU-D02 | Descarga de certificado en PDF | Media | 5 |
+| ID | Historia | Prioridad | Estimación |Sprint |
+|---|---|---|---|---|
+| HU-E01 | Programación de cursos | Alta | 5 |Sprint 1 |
+| HU-E02 | Inscripción de participantes a cursos | Alta | 5 |Sprint 1 |
+| HU-E03 | Validación de requisitos para inscripción | Alta | 8 |Sprint 1 |
+| HU-F01 | Registro de asistencia | Media | 3 |Sprint 2 |
+| HU-F02 | Registro de calificaciones | Media | 3 |Sprint 2 |
+| HU-C03 | Generación automática de certificados | Alta | 8 |Sprint 2 |
+| HU-D01 | Consulta de certificados por participante | Media | 3 |Sprint 3 |
+| HU-D02 | Descarga de certificado en PDF | Media | 5 |Sprint 3 |
 
 ---
 
