@@ -1,39 +1,99 @@
-# Ejecución Académica
-HU-F01
-Registro de asistencia
-CampoValorIDHU-F01ÉpicaEjecución AcadémicaRF cubiertoRF-003.3PrioridadAltaVersión1.0
-Historia de usuario
+# HU-F01
+
+## Registro de asistencia
+
+| Campo       | Valor               |
+| ----------- | ------------------- |
+| ID          | HU-F01              |
+| Épica       | Ejecución Académica |
+| RF cubierto | RF-003.3            |
+| Prioridad   | Alta                |
+| Versión     | 1.0                 |
+
+### Historia de usuario
 
 Yo como instructor quiero registrar la asistencia de los participantes por sesión para llevar el control de presencia en el curso.
 
-Criterios de aceptación
+### Criterios de aceptación
 
-CA-01: Solo aparecen participantes inscritos en el curso.
-CA-02: El sistema permite marcar asistencia o ausencia por participante.
-CA-03: El registro queda guardado y solo puede corregirse con permiso especial.
+* CA-01: Solo aparecen participantes inscritos en el curso.
+* CA-02: El sistema permite marcar asistencia o ausencia por participante.
+* CA-03: El registro queda guardado y solo puede corregirse con permiso especial.
 
-Tareas técnicas
-CapaTareaBackendCrear endpoint POST /api/cursos/:id/sesiones/:sesion/asistenciaBackendValidar que el participante esté inscrito en el cursoBackendRegistrar en auditoría cualquier corrección posteriorBase de datosCrear tabla asistencia: id, inscripcion_id, sesion, presente (bool), fechaFrontendLista de participantes con casilla de asistenciaFrontendBotón de guardar por sesiónFrontendIndicador de sesión actualQACP-F01: Registrar asistencia completa de una sesiónQACP-F02: Verificar que participante no inscrito no aparece en lista
-Notas técnicas
+### Tareas técnicas
 
-Si se usa ORM, crear modelos Asistencia y Sesion.
+| Capa          | Tarea                                                                      |
+| ------------- | -------------------------------------------------------------------------- |
+| Backend       | Crear endpoint POST /api/cursos/:id/sesiones/:sesion/asistencia            |
+| Backend       | Validar que el participante esté inscrito en el curso                      |
+| Backend       | Registrar en auditoría cualquier corrección posterior                      |
+| Base de datos | Crear tabla asistencia: id, inscripcion_id, sesion, presente (bool), fecha |
+| Frontend      | Lista de participantes con casilla de asistencia                           |
+| Frontend      | Botón de guardar por sesión                                                |
+| Frontend      | Indicador de sesión actual                                                 |
+| QA            | CP-F01: Registrar asistencia completa de una sesión                        |
+| QA            | CP-F02: Verificar que participante no inscrito no aparece en lista         |
 
-HU-F02
-Registro de calificaciones
-CampoValorIDHU-F02ÉpicaEjecución AcadémicaRF cubiertoRF-003.4PrioridadAltaVersión1.0
-Historia de usuario
+### Notas técnicas
+
+* Si se utiliza ORM, crear los modelos Asistencia y Sesion.
+* Las correcciones posteriores deben quedar registradas en auditoría para trazabilidad.
+
+### Small
+
+Sí, se enfoca exclusivamente en el control de asistencia de los participantes.
+
+### Testable
+
+Totalmente.
+# HU-F02
+
+## Registro de calificaciones
+
+| Campo       | Valor               |
+| ----------- | ------------------- |
+| ID          | HU-F02              |
+| Épica       | Ejecución Académica |
+| RF cubierto | RF-003.4            |
+| Prioridad   | Alta                |
+| Versión     | 1.0                 |
+
+### Historia de usuario
 
 Yo como instructor quiero ingresar la calificación de un participante para determinar si aprobó o reprobó el curso.
 
-Criterios de aceptación
+### Criterios de aceptación
 
-CA-01: Solo se puede calificar a participantes que registraron asistencia en la sesión.
-CA-02: El sistema valida que la nota esté dentro del rango permitido.
-CA-03: El sistema determina automáticamente el estado aprobado/reprobado según la nota.
-CA-04: Las notas requieren permiso especial para modificarse y dejan trazabilidad.
+* CA-01: Solo se puede calificar a participantes que registraron asistencia en la sesión.
+* CA-02: El sistema valida que la nota esté dentro del rango permitido.
+* CA-03: El sistema determina automáticamente el estado aprobado o reprobado según la nota.
+* CA-04: Las notas requieren permiso especial para modificarse y dejan trazabilidad.
 
-Tareas técnicas
-CapaTareaBackendCrear endpoint POST /api/inscripciones/:id/calificacionBackendValidar que el participante asistió antes de permitir la notaBackendCalcular y asignar estado aprobado/reprobado automáticamenteBase de datosAgregar columnas calificacion y estado_aprobacion en tabla inscripcionFrontendCampo de nota junto a cada participante con asistencia marcadaFrontendEstado aprobado/reprobado visible en tiempo realFrontendBotón de guardar calificacionesQACP-F03: Registrar nota válida a participante presenteQACP-F04: Intentar calificar participante ausenteQACP-F05: Ingresar nota fuera del rango permitido
-Notas técnicas
+### Tareas técnicas
 
-Las notas solo pueden modificarse con permiso especial; cada modificación queda en auditoría.
+| Capa          | Tarea                                                                  |
+| ------------- | ---------------------------------------------------------------------- |
+| Backend       | Crear endpoint POST /api/inscripciones/:id/calificacion                |
+| Backend       | Validar que el participante asistió antes de permitir la nota          |
+| Backend       | Calcular y asignar estado aprobado/reprobado automáticamente           |
+| Base de datos | Agregar columnas calificacion y estado_aprobacion en tabla inscripcion |
+| Frontend      | Campo de nota junto a cada participante con asistencia marcada         |
+| Frontend      | Estado aprobado/reprobado visible en tiempo real                       |
+| Frontend      | Botón de guardar calificaciones                                        |
+| QA            | CP-F03: Registrar nota válida a participante presente                  |
+| QA            | CP-F04: Intentar calificar participante ausente                        |
+| QA            | CP-F05: Ingresar nota fuera del rango permitido                        |
+
+### Notas técnicas
+
+* Las notas solo pueden modificarse mediante permisos especiales.
+* Toda modificación debe quedar registrada en auditoría con usuario, fecha y valor anterior.
+* El rango permitido de notas debe configurarse según las reglas académicas del sistema.
+
+### Small
+
+Sí, se enfoca en el proceso de registro y validación de calificaciones.
+
+### Testable
+
+Totalmente.
