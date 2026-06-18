@@ -4,7 +4,7 @@
 
 **TITAN** será un sistema de información diseñado para centralizar, automatizar y asegurar la trazabilidad de los procesos académicos y administrativos de un centro de entrenamiento para tareas de alto riesgo.
 
-El sistema debe resuelver la dispersión de información y los procesos manuales, ofreciendo una plataforma robusta que garantiza el **cumplimiento normativo**, facilita las **auditorías anuales** (Ministerio de Trabajo) y agiliza la **emisión y verificación pública de certificados**.
+El sistema debe resolver la dispersión de información y los procesos manuales, ofreciendo una plataforma robusta que garantiza el **cumplimiento normativo**, facilita las **auditorías anuales** (Ministerio de Trabajo) y agiliza la **emisión y verificación pública de certificados**.
 
 
 ---
