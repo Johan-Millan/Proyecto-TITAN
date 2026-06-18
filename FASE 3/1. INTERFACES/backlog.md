@@ -53,6 +53,12 @@
 
 ---
 
+## Sprint 1 — Núcleo Operativo (18 SP)
+
+**Objetivo:** Permitir la programación de cursos y la inscripción segura de participantes, validando cupos, disponibilidad de instructor y requisitos previos.
+
+---
+
 ## HU-F01 — Registro de asistencia
 
 **Como** instructor,
