@@ -15,6 +15,12 @@
 
 ---
 
+## Sprint 1 — Núcleo Operativo (18 SP)
+
+**Objetivo:** Permitir la programación de cursos y la inscripción segura de participantes, validando cupos, disponibilidad de instructor y requisitos previos.
+
+---
+
 ## HU-E01 — Programación de cursos
 
 **Como** coordinador académico,
@@ -52,10 +58,9 @@
 - Se muestra un mensaje de error indicando el requisito faltante (HU-T01).
 
 ---
+## Sprint 2 — Formación y Certificación (19 SP)
 
-## Sprint 1 — Núcleo Operativo (18 SP)
-
-**Objetivo:** Permitir la programación de cursos y la inscripción segura de participantes, validando cupos, disponibilidad de instructor y requisitos previos.
+**Objetivo:** Registrar la ejecución del curso (asistencia y calificaciones) y automatizar la emisión de certificados con validación de vigencia.
 
 ---
 
@@ -92,6 +97,11 @@
 **Criterios de aceptación:**
 - El certificado se asocia al tipo de curso correspondiente.
 - Incluye un código de verificación único.
+
+---
+## Sprint 3 — Consulta y Descarga (8 SP)
+
+**Objetivo:** Permitir a los participantes consultar y descargar sus certificados de manera autónoma.
 
 ---
 
