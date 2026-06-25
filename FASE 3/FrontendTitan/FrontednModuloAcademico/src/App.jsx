@@ -12,6 +12,9 @@ import Calendario from "./features/academico/Calendario.jsx";
 import ProgramarCurso from "./features/academico/ProgramarCurso.jsx";
 import InscribirParticipante from "./features/academico/InscribirParticipante.jsx";
 
+import Header from "./components/Layout/Header";
+import Dashboard from "./features/dashboard/Dashboard";
+
 function App() {
 const [vista, setVista] = useState("calendario");
   const [toast, setToast] = useState(null);
@@ -21,14 +24,39 @@ const [vista, setVista] = useState("calendario");
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: COLORS.lightGray, fontFamily: "Inter, Segoe UI, Arial, sans-serif" }}>
       <Sidebar active={vista} onChange={setVista} />
-      <main style={{ flex: 1, padding: "36px 40px", overflowY: "auto" }}>
-          <Routes>
-            <Route path="/" element={<Navigate to="/calendario" replace />} />
-            <Route path="/calendario" element={<Calendario onToast={showToast} />} />
-            <Route path="/programar" element={<ProgramarCurso onToast={showToast} />} />
-            <Route path="/inscribir" element={<InscribirParticipante onToast={showToast} />} />
-          </Routes>
-      </main>
+      <main
+  style={{
+    flex: 1,
+    background: COLORS.lightGray,
+  }}
+>
+  <Header />
+
+  <div
+    style={{
+      padding: "0 40px 40px",
+    }}
+  >
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+
+      <Route
+        path="/calendario"
+        element={<Calendario onToast={showToast} />}
+      />
+
+      <Route
+        path="/programar"
+        element={<ProgramarCurso onToast={showToast} />}
+      />
+
+      <Route
+        path="/inscribir"
+        element={<InscribirParticipante onToast={showToast} />}
+      />
+    </Routes>
+  </div>
+</main>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );

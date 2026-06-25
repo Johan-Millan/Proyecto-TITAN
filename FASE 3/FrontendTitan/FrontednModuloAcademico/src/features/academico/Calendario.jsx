@@ -38,10 +38,19 @@ function Calendario({ onToast }) {
           {cursos.map((c) => {
             const colores = tipoColor(c.curso?.nombre_curso || '')
             return (
-              <div key={c.id_programacion} style={{
+              <div key={c.id_programacion}
+              onMouseEnter={(e)=>{
+              e.currentTarget.style.transform='translateY(-3px)'
+              }}
+
+              onMouseLeave={(e)=>{
+              e.currentTarget.style.transform='translateY(0px)'
+              }} style={{
                 background: COLORS.white, border: `1px solid ${COLORS.borderGray}`,
                 borderRadius: 12, padding: '16px 20px',
-                display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap'
+                display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap',
+                transition: "all 0.2s ease",
+                cursor: "pointer",
               }}>
                 <div style={{ width: 52, height: 52, borderRadius: 10, background: COLORS.red, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <span style={{ color: COLORS.white, fontSize: 18 }}>📅</span>
